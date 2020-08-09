@@ -11,55 +11,35 @@ import {Button, View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import CustomButton from './components/custombutton';
 
-function HomeScreen({navigation}) {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
-  );
-}
-function AlertsScreen({navigation}) {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details screen"
-        onPress={() => navigation.navigate('Details')}
-      />
-      <CustomButton />
-    </View>
-  );
-}
+import DashboardScreen from './components/Dashboard'
+import AlertsScreen from './components/Alerts'
+import ProductsScreen from './components/Products'
+import SettingsScreen from './components/Settings'
 
-function DetailsScreen({navigation}) {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Details Screen</Text>
-      <Button
-        title="Go to Alerts"
-        onPress={() => navigation.navigate('Alerts')}
-      />
-      <Button
-        title="Go to First Screen"
-        onPress={() => navigation.popToTop()}
-      />
-    </View>
-  );
-}
+
+import AllProductsScreen from './components/Products/All'
+import ExpiringProductsScreen from './components/Products/Expiring'
+import LowStockProductsScreen from './components/Products/LowStock'
+
+
 const Stack = createStackNavigator();
-const BottomTabs = createBottomTabNavigator( 
-  );
-
-
+const BottomTabs = createBottomTabNavigator();
+const TopTabs = createMaterialTopTabNavigator();
 
 function App() {
+
+ function ProductTopTabs () {
+   return  <TopTabs.Navigator>
+   <TopTabs.Screen name="All" component={AllProductsScreen} />
+   <TopTabs.Screen name="Expiring" component={ExpiringProductsScreen} />
+   <TopTabs.Screen name="No Stock" component={LowStockProductsScreen} />
+</TopTabs.Navigator>
+ }
+ 
   return (
     <NavigationContainer>
       {/* <Stack.Navigator>
@@ -68,6 +48,7 @@ function App() {
 
         <Stack.Screen name="Alerts" component={AlertsScreen} />
       </Stack.Navigator> */}
+
 
 <BottomTabs.Navigator tabBarOptions={{
    
@@ -82,10 +63,10 @@ function App() {
     labelPosition: 'below-icon',
  
   }}>
-  <BottomTabs.Screen  name="Dashboard" component={HomeScreen} />
-  <BottomTabs.Screen name="Products" component={DetailsScreen}/>
-  <BottomTabs.Screen name="Alerts" component={DetailsScreen}/>
-  <BottomTabs.Screen name="Settings" component={DetailsScreen}/>
+  <BottomTabs.Screen  name="Dashboard" component={DashboardScreen} />
+  <BottomTabs.Screen name="Products" children={ProductTopTabs}/>
+  <BottomTabs.Screen name="Alerts" component={AlertsScreen}/>
+  <BottomTabs.Screen name="Settings" component={SettingsScreen}/>
 
 
 </BottomTabs.Navigator>
