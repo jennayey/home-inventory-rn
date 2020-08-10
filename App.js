@@ -11,66 +11,51 @@ import {Button, View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 import CustomButton from './components/custombutton';
 
-import DashboardScreen from './components/Dashboard'
-import AlertsScreen from './components/Alerts'
-import ProductsScreen from './components/Products'
-import SettingsScreen from './components/Settings'
+import DashboardScreen from './components/Dashboard';
+import AlertsScreen from './components/Alerts';
+import ProductsScreen from './components/Products';
+import SettingsScreen from './components/Settings';
 
+import AllProductsScreen from './components/Products/All';
+import ExpiringProductsScreen from './components/Products/Expiring';
+import LowStockProductsScreen from './components/Products/LowStock';
 
-import AllProductsScreen from './components/Products/All'
-import ExpiringProductsScreen from './components/Products/Expiring'
-import LowStockProductsScreen from './components/Products/LowStock'
-
-
-const Stack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 const TopTabs = createMaterialTopTabNavigator();
 
 function App() {
+  function ProductTopTabs() {
+    return (
+      <TopTabs.Navigator>
+        <TopTabs.Screen name="All" component={AllProductsScreen} />
+        <TopTabs.Screen name="Expiring" component={ExpiringProductsScreen} />
+        <TopTabs.Screen name="No Stock" component={LowStockProductsScreen} />
+      </TopTabs.Navigator>
+    );
+  }
 
- function ProductTopTabs () {
-   return  <TopTabs.Navigator>
-   <TopTabs.Screen name="All" component={AllProductsScreen} />
-   <TopTabs.Screen name="Expiring" component={ExpiringProductsScreen} />
-   <TopTabs.Screen name="No Stock" component={LowStockProductsScreen} />
-</TopTabs.Navigator>
- }
- 
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator>
-        <Stack.Screen name="Dashboard" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-
-        <Stack.Screen name="Alerts" component={AlertsScreen} />
-      </Stack.Navigator> */}
-
-
-<BottomTabs.Navigator tabBarOptions={{
-   
-    tabStyle: {
-      paddingTop: 20,
-      paddingBottom: 10,
-      
-    },
-    style: {
-      height: 58,
-    },
-    labelPosition: 'below-icon',
- 
-  }}>
-  <BottomTabs.Screen  name="Dashboard" component={DashboardScreen} />
-  <BottomTabs.Screen name="Products" children={ProductTopTabs}/>
-  <BottomTabs.Screen name="Alerts" component={AlertsScreen}/>
-  <BottomTabs.Screen name="Settings" component={SettingsScreen}/>
-
-
-</BottomTabs.Navigator>
-    
+      <BottomTabs.Navigator
+        tabBarOptions={{
+          tabStyle: {
+            paddingTop: 20,
+            paddingBottom: 10,
+          },
+          style: {
+            height: 58,
+          },
+          labelPosition: 'below-icon',
+        }}>
+        <BottomTabs.Screen name="Dashboard" component={DashboardScreen} />
+        <BottomTabs.Screen name="Products" children={ProductTopTabs} />
+        <BottomTabs.Screen name="Alerts" component={AlertsScreen} />
+        <BottomTabs.Screen name="Settings" component={SettingsScreen} />
+      </BottomTabs.Navigator>
     </NavigationContainer>
   );
 }

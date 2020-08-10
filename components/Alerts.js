@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {Button, View, Text} from 'react-native';
-import { exp } from 'react-native-reanimated';
+
+import { globalStyles } from './styles/global'
 
 class AlertsScreen extends Component {
 render() {
-   return ( <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-   <Text>Alerts Screen</Text>
+   return ( <View style={globalStyles.header}>
+   <Text style={globalStyles.text}>Alerts Screen</Text>
   
  </View>);
 }
