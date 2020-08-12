@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, View, Text} from 'react-native';
 
-import { globalStyles } from './styles/global'
+import { globalStyles } from '../styles/global'
 
 class AlertsScreen extends Component {
 render() {
