@@ -1,8 +1,8 @@
 import React, {useContext, useState} from 'react'
 
 
-const ThemeContext = React.createContext()
-const ThemeUpdateContext = React.createContext ()
+ const ThemeContext = React.createContext()
+ const ThemeUpdateContext = React.createContext ()
 
 export function getTheme () {
     return useContext(ThemeContext)
@@ -13,10 +13,11 @@ export function updateTheme () {
 }
 
 export function Themer ({ children }) {
-    const [darkTheme, setDarkTheme] = useState(true)
+    const [darkTheme, setDarkTheme] = useState(false)
 
     function toggleTheme() {
         setDarkTheme (prevDarkTheme => !prevDarkTheme)
+        console.log(darkTheme)
 
     }
 return (

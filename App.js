@@ -7,11 +7,11 @@
  */
 import * as React from 'react';
 import {Button, View, Text} from 'react-native';
-import {getTheme, updateTheme} from './src/contexts/ManageThemeContexts'
+import {getTheme, updateTheme} from './src/utils/ManageThemeContexts'
 
-import HomeScreen from './src/components/Home'
+import HomeScreen from './src/screens/Home'
 // import { ThemeProvider } from '@react-navigation/native';
-import {Themer} from './src/contexts/ManageThemeContexts'
+import {Themer} from './src/utils/ManageThemeContexts'
 export default function App() {
 
 
