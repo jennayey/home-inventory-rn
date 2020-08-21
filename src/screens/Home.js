@@ -23,24 +23,22 @@ const TopTabs = createMaterialTopTabNavigator();
 
 const stackHeaderOptions = {
   headerTitleAlign: 'center',
-headerStyle: {
-  shadowOpacity: 0,
-elevation: 0,
-
-}
-
-} 
+  headerStyle: {
+    shadowOpacity: 0,
+    elevation: 0,
+  },
+};
 
 export default function HomeScreen() {
- const MyTheme = {
+  const MyTheme = {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
       primary: colorSchemes().primaryColor,
-      background: colorSchemes().backgroundColor,
-      card: colorSchemes().backgroundColor,
+      background: colorSchemes().primaryBackgroundColor,
+      card: colorSchemes().primaryBackgroundColor,
       text: colorSchemes().textColor,
-      border: colorSchemes().secondaryColor,
+      border: colorSchemes().accentColor,
       notification: 'rgb(255, 69, 58)',
     },
   };
@@ -57,37 +55,53 @@ export default function HomeScreen() {
   function HomeStackNav() {
     return (
       <HomeStack.Navigator>
-        <HomeStack.Screen name="Dashboard" component={DashboardScreen} options={stackHeaderOptions}/>
+        <HomeStack.Screen
+          name="Dashboard"
+          component={DashboardScreen}
+          options={stackHeaderOptions}
+        />
       </HomeStack.Navigator>
     );
-  }  function ProductsStack() {
+  }
+  function ProductsStack() {
     return (
       <HomeStack.Navigator>
-      <HomeStack.Screen name="Products" component={ProductTopTabs} options={stackHeaderOptions} />
-    </HomeStack.Navigator>
+        <HomeStack.Screen
+          name="Products"
+          component={ProductTopTabs}
+          options={stackHeaderOptions}
+        />
+      </HomeStack.Navigator>
     );
   }
-  
+
   function AlertsStack() {
     return (
       <HomeStack.Navigator>
-      <HomeStack.Screen name="Alerts" component={AlertsScreen} options={stackHeaderOptions} />
-    </HomeStack.Navigator>
+        <HomeStack.Screen
+          name="Alerts"
+          component={AlertsScreen}
+          options={stackHeaderOptions}
+        />
+      </HomeStack.Navigator>
     );
   }
 
   function SettingStack() {
     return (
       <HomeStack.Navigator>
-      <HomeStack.Screen name="Settings" component={SettingsScreen} options={stackHeaderOptions} />
-    </HomeStack.Navigator>
+        <HomeStack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={stackHeaderOptions}
+        />
+      </HomeStack.Navigator>
     );
   }
 
-
-
-  return <NavigationContainer theme={MyTheme}>
-<BottomTabs.Navigator
+  return (
+    <NavigationContainer theme={MyTheme}>
+      <BottomTabs.Navigator
         tabBarOptions={{
           tabStyle: {
             paddingTop: 20,
@@ -98,13 +112,13 @@ export default function HomeScreen() {
           },
           labelPosition: 'below-icon',
         }}>
-        <BottomTabs.Screen name='Home' component={HomeStackNav} />
+        <BottomTabs.Screen name="Home" component={HomeStackNav} />
         <BottomTabs.Screen name="Products" component={ProductsStack} />
         <BottomTabs.Screen name="Alerts" component={AlertsStack} />
         <BottomTabs.Screen name="Settings" component={SettingStack} />
       </BottomTabs.Navigator>
-
-  </NavigationContainer>;
+    </NavigationContainer>
+  );
 }
 
 // export default Home

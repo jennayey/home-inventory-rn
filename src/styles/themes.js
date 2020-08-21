@@ -5,9 +5,11 @@ import {getTheme, setTheme} from '../utils/ManageThemeContexts'
   const darkTheme = getTheme()
   const colors = {
     primaryColor: darkTheme ? '#000000' :'#172CE8',
-    backgroundColor: darkTheme ? '#0f053d' : '#FFFFFF',
-    textColor: darkTheme ? '#FFFFFF' : '#0f053d',
-    secondaryColor: darkTheme ? '#1a0b5e': '#f3f2f7',
+    primaryBackgroundColor: darkTheme ? '#0f053d' : '#FFFFFF',
+    secondaryBackgroundColor: darkTheme ? '#000' : '#F3F8FF',
+    textColor: darkTheme ? '#FFFFFF' : '#0B2F5D',
+    secondaryTextColor: darkTheme ? '#' : '#AD0000',
+    accentColor: darkTheme ? '#1a0b5e': '#172CE8',
     navTextColor: darkTheme ? '#FFFFFF' : '#172CE8',
   }  
   return colors
