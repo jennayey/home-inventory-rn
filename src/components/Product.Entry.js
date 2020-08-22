@@ -7,19 +7,19 @@ import {Button, View, Text, Alert, Pressable} from 'react-native';
 import colorSchemes from '../styles/themes'
 
 
-export default function ProductEntry({productName, stockPcs, expiryDate}){
+export default function ProductEntry({item}){
     const navigation = useNavigation();
 return(
 
-    <Pressable style={{ width: '90%', }} onPress={()=> navigation.navigate('Settings')} >
+    <Pressable onPress={()=> navigation.navigate('Settings')} >
         <View style={{paddingVertical: '5%', borderRadius: 5, }}>
         <Text style={{color:colorSchemes().textColor, marginBottom: 10, fontWeight:'bold' }}>
-{productName}    </Text>
+{item.itemName}    </Text>
 <Text style={{color:colorSchemes().textColor, marginBottom: 10 }}>
-{stockPcs} pcs left   </Text>
+{item.stock} pcs left   </Text>
 
 <Text style={{color:colorSchemes().textColor, marginBottom: 10 }}>
-{expiryDate}    </Text>
+{item.expiryDate}    </Text>
 
 
     </View>
