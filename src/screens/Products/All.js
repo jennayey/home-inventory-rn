@@ -11,7 +11,7 @@ import {
 function AllProductsScreen() {
 
 
-  const [items, addItems] = useState();
+  const [items, addItems] = useState([]);
   const [count, changeCount] = useState(0);
 
   const [addItemModal, addItemModalVisible] = useState(false);
@@ -23,25 +23,40 @@ function AllProductsScreen() {
   useEffect(() => { storeData().then(getDataStored())}, [count]);
 
   const storeData = async () => {
+    let products = ['itemList', JSON.stringify(items)]
+    let productCount =['itemCount', JSON.stringify(count)]
     try {
-      const jsonValue = JSON.stringify(items)
-      await AsyncStorage.setItem('itemList', jsonValue)
+      await AsyncStorage.multiSet([productCount, products])
       console.log('Data saved hhaha')
     } catch (error) {
       console.log("//" + error.message )
     }
   }
-  
+  //TODO: store count data too
   const getDataStored= async () => {
-    let list 
+    let keys, list
     try {
-      list = await AsyncStorage.getItem('itemList') || 'none';
-      addItems(JSON.parse(list)) ;
+    
+      // addItems(list) ;
+      keys = await AsyncStorage.multiGet(['itemCount', 'itemList'])
+      list = JSON.parse( keys[1][1]) || [];
+      addItems(list)
+      changeCount(JSON.parse(keys[0][1]))
     } catch (error) {
       // Error retrieving data
-      console.log(error.message + ' HAHAHAH');
-    }  console.log (list)
+      console.log(error.message);
+    }  console.log (keys[1][1])
 
+  }
+  const clearData = async () =>{
+    let keys=['itemList', 'itemCount']
+    try {
+      await AsyncStorage.multiRemove(keys)
+
+    }catch(error){
+      console.log(error.message)
+    }
+    getDataStored()
   }
 
   const addProducts = () => {
@@ -159,6 +174,8 @@ function AllProductsScreen() {
       </Button>
       <Button onPress={getDataStored} title='get data'/>
       <Button onPress={storeData} title='store Data'/>
+      <Button onPress={clearData} title='Clear Data'/>
+      <Text>Total products: {count}</Text>
       <FlatList
         showsVerticalScrollIndicator={false}
         style={{width: '90%'}}

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import {useNavigation} from '@react-navigation/native';
-import {Button, View, Text, Alert, Pressable} from 'react-native';
+import {Button, View, Text, Alert, Pressable, Modal} from 'react-native';
 import colorSchemes from '../styles/themes';
 
 export default function ProductEntry({item}) {
