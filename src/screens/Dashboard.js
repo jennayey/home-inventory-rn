@@ -15,12 +15,13 @@ const toggleDarkMode = updateTheme()
 const themeWhat = getTheme()
 
 
-return ( <View style={{flex: 1, flexGrow:1, alignItems: 'center'}}>
+return (
 
-<Header title='Latest' />
-<Announcement screenName='Expiring'/>
-<Announcement screenName='Low Stock'/>
- <Button title="Dark mode test" onPress={toggleDarkMode}>Dark mode</Button>
+<View style={{flex: 1, flexGrow:1, alignItems: 'center'}}>
+    <Header title='Latest' />
+    <Announcement screenName='Expiring'/>
+    <Announcement screenName='Low Stock'/>
+    <Button title="Dark mode test" onPress={toggleDarkMode}>Dark mode</Button>
 </View>);
 
 }
