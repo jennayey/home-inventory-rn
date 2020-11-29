@@ -11,7 +11,7 @@ import {
 function AllProductsScreen() {
 
 
-  const [items, addItems] = useState([]);
+  const [items, addItems] = useState();
   const [count, changeCount] = useState(0);
 
   const [addItemModal, addItemModalVisible] = useState(false);
@@ -21,6 +21,9 @@ function AllProductsScreen() {
   const [itemStock, setItemStock] = useState('');
   
   useEffect(() => { storeData().then(getDataStored())}, [count]);
+
+
+
 
   const storeData = async () => {
     let products = ['itemList', JSON.stringify(items)]
@@ -33,18 +36,25 @@ function AllProductsScreen() {
     }
   }
   //TODO: store count data too
+ 
   const getDataStored= async () => {
     let keys, list
     try {
     
       // addItems(list) ;
       keys = await AsyncStorage.multiGet(['itemCount', 'itemList'])
-      list = JSON.parse( keys[1][1]) || [];
-      addItems(list)
+      list = JSON.parse(keys[1][1]) || [];
+      if (list!==[]){
+        addItems(list)
+      }
+      else {
+        addItems([])
+      }
+      // addItems(list)
       changeCount(JSON.parse(keys[0][1]))
     } catch (error) {
       // Error retrieving data
-      console.log(error.message);
+      console.log('HT ' + error.message);
     }  console.log (keys[1][1])
 
   }
@@ -66,7 +76,7 @@ function AllProductsScreen() {
           itemName: itemName,
           expiryDate: itemExpiry,
           stock: itemStock,
-          key: Math.random().toString(),
+          key: '@'+itemName,
         },
         ...items,
       ];
