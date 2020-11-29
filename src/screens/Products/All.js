@@ -2,6 +2,8 @@ import React, {Component, useState, useEffect} from 'react';
 import {Button, View, Text, FlatList, Modal, TextInput} from 'react-native';
 import ProductEntry from '../../components/Product.Entry';
 import colorSchemes from '../../styles/themes';
+
+import {useNavigation} from '@react-navigation/native';
 // import {set} from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -10,8 +12,10 @@ import {
 } from 'react-native-gesture-handler';
 function AllProductsScreen() {
 
+  const navigation = useNavigation()
 
   const [items, addItems] = useState();
+  const [currentItem, setNewItem]=useState();
   const [count, changeCount] = useState(0);
 
   const [addItemModal, addItemModalVisible] = useState(false);
@@ -20,12 +24,13 @@ function AllProductsScreen() {
   const [itemExpiry, setItemExpiry] = useState('');
   const [itemStock, setItemStock] = useState('');
   
-  useEffect(() => { storeData().then(getDataStored())}, [count]);
+  useEffect(() => { storeData().then(getDataStored()).then(getAllKeys())}, [count]);
 
 
 
 
   const storeData = async () => {
+    // let newProduct = [currentItem.key, JSON.stringify(currentItem)]
     let products = ['itemList', JSON.stringify(items)]
     let productCount =['itemCount', JSON.stringify(count)]
     try {
@@ -55,7 +60,9 @@ function AllProductsScreen() {
     } catch (error) {
       // Error retrieving data
       console.log('HT ' + error.message);
-    }  console.log (keys[1][1])
+    }  
+    // console.log ( items)
+    console.log('in Storage: ' + keys[1][1])
 
   }
   const clearData = async () =>{
@@ -72,18 +79,42 @@ function AllProductsScreen() {
   const addProducts = () => {
     addItems((prevItems) => {
       return [
-        {
+        ...items, {
           itemName: itemName,
           expiryDate: itemExpiry,
           stock: itemStock,
           key: '@'+itemName,
-        },
-        ...items,
+        }
+    
       ];
     })
     changeCount(count+1)
+    // addNewProduct()
+    // console.log(currentItem)
   }
+// const addNewProduct = () =>{
+//  setNewItem ({
+//     itemName: itemName,
+//     expiryDate: itemExpiry,
+//     stock: itemStock,
+//     key: '@'+itemName
+//   }) 
+
+  
+// }
  
+const getAllKeys = async () => {
+  let keys = []
+  try {
+    keys = await AsyncStorage.getAllKeys()
+  } catch(e) {
+    // read key error
+  }
+
+  console.log('Test' + keys)
+  // example console.log result:
+  // ['@MyApp_user', '@MyApp_key']
+}
 
   return (
     <View

@@ -8,7 +8,16 @@ export default function ProductEntry({item}) {
   const navigation = useNavigation();
   return (
     // TO DO: Pass items details to product view screen
-    <Pressable onPress={() => navigation.navigate('Settings')}>
+  <Pressable onPress={() => navigation.navigate('ProductPage', {
+    itemID: item.key,
+    name: item.itemName,
+    stock: item.stock,
+    expiryDate: item.expiryDate
+    // itemName: itemName,
+    // expiryDate: itemExpiry,
+    // stock: itemStock,
+    // key: '@'+itemName,
+  })}>
       <View style={{paddingVertical: '5%', borderRadius: 5}}>
         <Text
           style={{

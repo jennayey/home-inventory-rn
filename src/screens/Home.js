@@ -15,6 +15,7 @@ import SettingsScreen from './Settings';
 import AllProductsScreen from '../screens/Products/All';
 import ExpiringProductsScreen from '../screens/Products/Expiring';
 import LowStockProductsScreen from '../screens/Products/LowStock';
+import ProductPage from '../screens/Products/ProductPage';
 import colorSchemes from '../styles/themes';
 import {color} from 'react-native-reanimated';
 const HomeStack = createStackNavigator();
@@ -71,6 +72,10 @@ export default function HomeScreen() {
           component={ProductTopTabs}
           options={stackHeaderOptions}
         />
+        <HomeStack.Screen
+        name="ProductPage"
+        component={ProductPage}
+        options={stackHeaderOptions}/>
       </HomeStack.Navigator>
     );
   }
