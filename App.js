@@ -14,7 +14,6 @@ import HomeScreen from './src/screens/Home'
 import {Themer} from './src/utils/ManageThemeContexts'
 export default function App() {
 
-
   return (
 <Themer>
 <HomeScreen/>

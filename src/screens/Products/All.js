@@ -1,9 +1,9 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {Component, useState, useEffect, useLayoutEffect} from 'react';
 import {Button, View, Text, FlatList, Modal, TextInput} from 'react-native';
 import ProductEntry from '../../components/Product.Entry';
 import colorSchemes from '../../styles/themes';
 
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useIsFocused, useFocusEffect } from '@react-navigation/native';
 // import {set} from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -16,7 +16,7 @@ function AllProductsScreen() {
 
   const [items, addItems] = useState();
   const [currentItem, setNewItem]=useState();
-  const [count, changeCount] = useState(0);
+  const [count, changeCount] = useState('0');
 
   const [addItemModal, addItemModalVisible] = useState(false);
 
@@ -24,24 +24,28 @@ function AllProductsScreen() {
   const [itemExpiry, setItemExpiry] = useState('');
   const [itemStock, setItemStock] = useState('');
   
-  useEffect(() => { storeData().then(getDataStored()).then(getAllKeys())}, [count]);
+useEffect(() => { storeData().then(console.log('RUNNING'))},[count]);
 
-
-
+// useFocusEffect  (()=> {
+//   getDataStored()
+//   console.log('FOCUS')
+// },[])
+useLayoutEffect(()=>{
+  getDataStored().then(getDataStored())
+  console.log('Runnig Layout')
+},[])
 
   const storeData = async () => {
-    // let newProduct = [currentItem.key, JSON.stringify(currentItem)]
     let products = ['itemList', JSON.stringify(items)]
     let productCount =['itemCount', JSON.stringify(count)]
     try {
       await AsyncStorage.multiSet([productCount, products])
-      console.log('Data saved hhaha')
+      // console.log('Data saved hhaha')
     } catch (error) {
       console.log("//" + error.message )
     }
   }
-  //TODO: store count data too
- 
+  //TODO: add function to check if same key exists
   const getDataStored= async () => {
     let keys, list
     try {
@@ -62,18 +66,18 @@ function AllProductsScreen() {
       console.log('HT ' + error.message);
     }  
     // console.log ( items)
-    console.log('in Storage: ' + keys[1][1])
+    // console.log('in Storage: ' + keys[1][1])
 
   }
   const clearData = async () =>{
     let keys=['itemList', 'itemCount']
     try {
       await AsyncStorage.multiRemove(keys)
-
     }catch(error){
       console.log(error.message)
     }
     getDataStored()
+   
   }
 
   const addProducts = () => {
@@ -111,7 +115,7 @@ const getAllKeys = async () => {
     // read key error
   }
 
-  console.log('Test' + keys)
+  // console.log('Test' + keys)
   // example console.log result:
   // ['@MyApp_user', '@MyApp_key']
 }
@@ -167,6 +171,7 @@ const getAllKeys = async () => {
             onChangeText={(text) => setItemStock(text)}
             style={{marginBottom: '1%'}}
             placeholder="No of Stocks"
+            keyboardType="numeric"
           />
           <TextInput
             onChangeText={(text) => setItemExpiry(text)}
@@ -215,7 +220,10 @@ const getAllKeys = async () => {
       </Button>
       <Button onPress={getDataStored} title='get data'/>
       <Button onPress={storeData} title='store Data'/>
-      <Button onPress={clearData} title='Clear Data'/>
+      <Button onPress={()=> {
+        clearData()
+      
+      }} title='Clear Data'/>
       <Text>Total products: {count}</Text>
       <FlatList
         showsVerticalScrollIndicator={false}
