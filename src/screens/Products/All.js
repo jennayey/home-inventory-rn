@@ -3,123 +3,137 @@ import {Button, View, Text, FlatList, Modal, TextInput} from 'react-native';
 import ProductEntry from '../../components/Product.Entry';
 import colorSchemes from '../../styles/themes';
 
-import {useNavigation, useIsFocused, useFocusEffect } from '@react-navigation/native';
+import {
+  useNavigation,
+  useIsFocused,
+  useFocusEffect,
+} from '@react-navigation/native';
 // import {set} from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import moment from 'moment';
 import {
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 function AllProductsScreen() {
-
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const [items, addItems] = useState();
-  const [currentItem, setNewItem]=useState();
+  const [currentItem, setNewItem] = useState();
   const [count, changeCount] = useState('0');
-
   const [addItemModal, addItemModalVisible] = useState(false);
-
   const [itemName, setItemName] = useState('');
   const [itemExpiry, setItemExpiry] = useState('');
   const [itemStock, setItemStock] = useState('');
-  
-useEffect(() => { storeData().then(console.log('RUNNING'))},[count]);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  useEffect(() => {
+    storeData().then(console.log('RUNNING'));
+  }, [count, itemExpiry]);
 
-// useFocusEffect  (()=> {
-//   getDataStored()
-//   console.log('FOCUS')
-// },[])
-useLayoutEffect(()=>{
-  getDataStored().then(getDataStored())
-  console.log('Runnig Layout')
-},[])
+  // useFocusEffect  (()=> {
+  //   getDataStored()
+  //   console.log('FOCUS')
+  // },[])
+  useLayoutEffect(() => {
+    getDataStored().then(getDataStored());
+    console.log('Runnig Layout');
+  }, []);
 
   const storeData = async () => {
-    let products = ['itemList', JSON.stringify(items)]
-    let productCount =['itemCount', JSON.stringify(count)]
+    let products = ['itemList', JSON.stringify(items)];
+    let productCount = ['itemCount', JSON.stringify(count)];
     try {
-      await AsyncStorage.multiSet([productCount, products])
+      await AsyncStorage.multiSet([productCount, products]);
       // console.log('Data saved hhaha')
     } catch (error) {
-      console.log("//" + error.message )
+      console.log('//' + error.message);
     }
-  }
+  };
   //TODO: add function to check if same key exists
-  const getDataStored= async () => {
-    let keys, list
+  const getDataStored = async () => {
+    let keys, list;
     try {
-    
       // addItems(list) ;
-      keys = await AsyncStorage.multiGet(['itemCount', 'itemList'])
+      keys = await AsyncStorage.multiGet(['itemCount', 'itemList']);
       list = JSON.parse(keys[1][1]) || [];
-      if (list!==[]){
-        addItems(list)
-      }
-      else {
-        addItems([])
+      if (list !== []) {
+        addItems(list);
+      } else {
+        addItems([]);
       }
       // addItems(list)
-      changeCount(JSON.parse(keys[0][1]))
+      changeCount(JSON.parse(keys[0][1]));
     } catch (error) {
       // Error retrieving data
       console.log('HT ' + error.message);
-    }  
+    }
     // console.log ( items)
     // console.log('in Storage: ' + keys[1][1])
-
-  }
-  const clearData = async () =>{
-    let keys=['itemList', 'itemCount']
+  };
+  const clearData = async () => {
+    let keys = ['itemList', 'itemCount'];
     try {
-      await AsyncStorage.multiRemove(keys)
-    }catch(error){
-      console.log(error.message)
+      await AsyncStorage.multiRemove(keys);
+    } catch (error) {
+      console.log(error.message);
     }
-    getDataStored()
-   
-  }
+    getDataStored();
+  };
 
   const addProducts = () => {
     addItems((prevItems) => {
       return [
-        ...items, {
+        ...items,
+        {
           itemName: itemName,
           expiryDate: itemExpiry,
           stock: itemStock,
-          key: '@'+itemName,
-        }
-    
+          key: '@' + itemName,
+        },
       ];
-    })
-    changeCount(count+1)
+    });
+    changeCount(count + 1);
     // addNewProduct()
     // console.log(currentItem)
-  }
-// const addNewProduct = () =>{
-//  setNewItem ({
-//     itemName: itemName,
-//     expiryDate: itemExpiry,
-//     stock: itemStock,
-//     key: '@'+itemName
-//   }) 
+  };
+  // const addNewProduct = () =>{
+  //  setNewItem ({
+  //     itemName: itemName,
+  //     expiryDate: itemExpiry,
+  //     stock: itemStock,
+  //     key: '@'+itemName
+  //   })
 
-  
-// }
- 
-const getAllKeys = async () => {
-  let keys = []
-  try {
-    keys = await AsyncStorage.getAllKeys()
-  } catch(e) {
-    // read key error
-  }
+  // }
 
-  // console.log('Test' + keys)
-  // example console.log result:
-  // ['@MyApp_user', '@MyApp_key']
-}
+  const getAllKeys = async () => {
+    let keys = [];
+    try {
+      keys = await AsyncStorage.getAllKeys();
+    } catch (e) {
+      // read key error
+    }
 
+    // console.log('Test' + keys)
+    // example console.log result:
+    // ['@MyApp_user', '@MyApp_key']
+  };
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+    console.log('View Date');
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.log('A date has been picked: ', date);
+    console.log (moment().toDate())
+    setItemExpiry(date)
+    hideDatePicker();
+  };
   return (
     <View
       style={{
@@ -173,10 +187,31 @@ const getAllKeys = async () => {
             placeholder="No of Stocks"
             keyboardType="numeric"
           />
-          <TextInput
+       
+          <View
+            style={{
+              marginVertical: 15,
+              justifyContent: 'space-between',
+              alignContent: 'center',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+               <TextInput
             onChangeText={(text) => setItemExpiry(text)}
-            style={{marginBottom: 20}}
-            placeholder="Expiry Date"
+            style={{color:'black'}}
+            placeholder="TEst"
+            editable={false}
+            value={moment(itemExpiry).format("MMMM DD, YYYY")}
+          />
+           
+            <Button title="Set Date" onPress={showDatePicker}/>
+          </View>
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+            minimumDate={moment().toDate()}
           />
 
           <View
@@ -189,8 +224,8 @@ const getAllKeys = async () => {
               <Button
                 title="Add item"
                 onPress={() => {
-                  addProducts()
-                  addItemModalVisible(!addItemModal)
+                  addProducts();
+                  addItemModalVisible(!addItemModal);
                 }}></Button>
             </View>
             <View
@@ -218,12 +253,14 @@ const getAllKeys = async () => {
         style={{color: colorSchemes().textColor, paddingVertical: 10}}>
         //TO DO: Sort Function here
       </Button>
-      <Button onPress={getDataStored} title='get data'/>
-      <Button onPress={storeData} title='store Data'/>
-      <Button onPress={()=> {
-        clearData()
-      
-      }} title='Clear Data'/>
+      <Button onPress={getDataStored} title="get data" />
+      <Button onPress={storeData} title="store Data" />
+      <Button
+        onPress={() => {
+          clearData();
+        }}
+        title="Clear Data"
+      />
       <Text>Total products: {count}</Text>
       <FlatList
         showsVerticalScrollIndicator={false}

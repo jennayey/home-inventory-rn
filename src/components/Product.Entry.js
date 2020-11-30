@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Button, View, Text, Alert, Pressable, Modal} from 'react-native';
 import colorSchemes from '../styles/themes';
-
+import moment from 'moment'
 export default function ProductEntry({item}) {
   const navigation = useNavigation();
   return (
@@ -32,7 +32,7 @@ export default function ProductEntry({item}) {
         </Text>
 
         <Text style={{color: colorSchemes().textColor, marginBottom: 10}}>
-          {item.expiryDate}{' '}
+          {moment(item.expiryDate).format('MMMM DD, YYYY')}{' '}
         </Text>
       </View>
     </Pressable>

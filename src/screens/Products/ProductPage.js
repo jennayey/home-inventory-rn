@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import {set} from 'react-native-reanimated';
 import { TextInput } from 'react-native-gesture-handler';
-
+import moment from 'moment'
 export default function ProductPage({route, navigation}) {
   const {itemID, name, stock, expiryDate} = route.params;
   const [productID, setProductID] = useState();
@@ -196,7 +196,7 @@ export default function ProductPage({route, navigation}) {
               </Text>
 
               <Text style={{color: colorSchemes().textColor, marginBottom: 10}}>
-                {productExpiryDate}{' '}
+                {moment(productExpiryDate).format('MMMM DD, YYYY')}{' '}
               </Text>
               <Button
                 title="Edit"
