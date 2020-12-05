@@ -27,14 +27,10 @@ function AllProductsScreen() {
   const [itemExpiry, setItemExpiry] = useState('');
   const [itemStock, setItemStock] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  //TODO 
   useEffect(() => {
     storeData().then(console.log('RUNNING'));
   }, [count, itemExpiry]);
-
-  // useFocusEffect  (()=> {
-  //   getDataStored()
-  //   console.log('FOCUS')
-  // },[])
 
   useFocusEffect(
     React.useCallback(() => {
@@ -59,7 +55,6 @@ function AllProductsScreen() {
     let productCount = ['itemCount', JSON.stringify(count)];
     try {
       await AsyncStorage.multiSet([productCount, products]);
-      // console.log('Data saved hhaha')
     } catch (error) {
       console.log('//' + error.message);
     }
@@ -68,7 +63,6 @@ function AllProductsScreen() {
   const getDataStored = async () => {
     let keys, list;
     try {
-      // addItems(list) ;
       keys = await AsyncStorage.multiGet(['itemCount', 'itemList']);
       list = JSON.parse(keys[1][1]) || [];
       if (list !== []) {
@@ -76,14 +70,11 @@ function AllProductsScreen() {
       } else {
         addItems([]);
       }
-      // addItems(list)
       changeCount(JSON.parse(keys[0][1]));
     } catch (error) {
       // Error retrieving data
       console.log('HT ' + error.message);
     }
-    // console.log ( items)
-    // console.log('in Storage: ' + keys[1][1])
   };
   const clearData = async () => {
     let keys = ['itemList', 'itemCount'];
@@ -104,22 +95,18 @@ function AllProductsScreen() {
           expiryDate: itemExpiry,
           stock: itemStock,
           key: '@' + itemName,
+          // status: 
+          //TODO Add price
+          //TODO Notes
+          //TODO Add key for expiring status
+
         },
       ];
     });
     changeCount(count + 1);
-    // addNewProduct()
-    // console.log(currentItem)
+    console.log("ADD PRODUCTS:" + moment().diff(itemExpiry, 'days'))
   };
-  // const addNewProduct = () =>{
-  //  setNewItem ({
-  //     itemName: itemName,
-  //     expiryDate: itemExpiry,
-  //     stock: itemStock,
-  //     key: '@'+itemName
-  //   })
-
-  // }
+ 
 
   const getAllKeys = async () => {
     let keys = [];

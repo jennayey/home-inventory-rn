@@ -25,14 +25,14 @@ export default function ProductEntry({item}) {
             marginBottom: 10,
             fontWeight: 'bold',
           }}>
-          {item.itemName}{' '}
+          {item.itemName}
         </Text>
         <Text style={{color: colorSchemes().textColor, marginBottom: 10}}>
-          {item.stock} pcs left{' '}
+          {item.stock} pcs left
         </Text>
 
         <Text style={{color: colorSchemes().textColor, marginBottom: 10}}>
-          {moment(item.expiryDate).format('MMMM DD, YYYY')}{' '}
+          {moment(item.expiryDate).format('MMMM DD, YYYY')}. Expires in {-moment().diff(item.expiryDate, 'days')} day/s
         </Text>
       </View>
     </Pressable>

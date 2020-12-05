@@ -16,16 +16,19 @@ import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import {set} from 'react-native-reanimated';
 import {TextInput} from 'react-native-gesture-handler';
 import moment from 'moment';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+
 export default function ProductPage({route, navigation}) {
   const {itemID, name, stock} = route.params;
   const [productID, setProductID] = useState();
-  const [count, setCount] = useState(0);
   const [editMode, setEditMode] = useState();
   const [productList, setList] = useState();
   const [productName, setProductName] = useState(name);
   const [productStocks, setProductStocks] = useState(stock);
   const [productExpiryDate, setProductExpiry] = useState();
   const [ready, setReady] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
 
   // useEffect(() => {
   //   // getDataStored()
@@ -119,17 +122,6 @@ export default function ProductPage({route, navigation}) {
     }
   };
 
-  // const getDataStored = async () => {
-  //   let list;
-  //   try {
-  //     list = await AsyncStorage.getItem('itemList');
-  //     setList(JSON.parse(list));
-  //   } catch (error) {
-  //     // Error retrieving data
-  //     console.log('ProdPage Get ' + error.message);
-  //   }
-  // };
-
   const getDataStored = async () => {
     let list;
     try {
@@ -143,8 +135,32 @@ export default function ProductPage({route, navigation}) {
     }
   };
 
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+    console.log('View Date');
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.log('A date has been picked: ', date);
+    console.log (moment().toDate())
+    setProductExpiry(date)
+    hideDatePicker();
+  };
+
   return (
     <View>
+       <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+            minimumDate={moment().toDate()}
+          />
+
       {editMode ? (
         //TODO convert to text fields in edit mode
         <View>
@@ -160,12 +176,25 @@ export default function ProductPage({route, navigation}) {
             style={{marginBottom: '1%'}}
             placeholder="No of Stocks"
             keyboardType="numeric"
+            defaultValue={productStocks}
           />
-          <TextInput
+            <View
+            style={{
+              marginVertical: 15,
+              justifyContent: 'space-between',
+              alignContent: 'center',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+               <TextInput
             onChangeText={(text) => setProductExpiry(text)}
-            style={{marginBottom: 20}}
-            placeholder="Expiry Date"
+            style={{color:'black'}}
+            editable={false}
+            value={moment(productExpiryDate).format("MMMM DD, YYYY")}
           />
+           
+            <Button title="Edit Date" onPress={showDatePicker}/>
+          </View>
           <Button
             title="Save"
             onPress={() => {
