@@ -11,8 +11,8 @@ export default function ProductEntry({item}) {
   <Pressable onPress={() => navigation.navigate('ProductPage', {
     itemID: item.key,
     name: item.itemName,
-    stock: item.stock,
-    expiryDate: item.expiryDate
+    stock: item.stock
+    // expiryDate: item.expiryDate
     // itemName: itemName,
     // expiryDate: itemExpiry,
     // stock: itemStock,

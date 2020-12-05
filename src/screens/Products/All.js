@@ -35,6 +35,20 @@ function AllProductsScreen() {
   //   getDataStored()
   //   console.log('FOCUS')
   // },[])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getDataStored()
+      console.log('FOCUS')
+      return () => {
+      
+          console.log('UNFOCUS')
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
+
   useLayoutEffect(() => {
     getDataStored().then(getDataStored());
     console.log('Runnig Layout');

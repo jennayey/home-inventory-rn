@@ -1,6 +1,6 @@
 import React, {Component, useState, useEffect, useLayoutEffect} from 'react';
 
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, StackActions} from '@react-navigation/native';
 import {
   Button,
   View,
@@ -14,17 +14,17 @@ import colorSchemes from '../../styles/themes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import {set} from 'react-native-reanimated';
-import { TextInput } from 'react-native-gesture-handler';
-import moment from 'moment'
+import {TextInput} from 'react-native-gesture-handler';
+import moment from 'moment';
 export default function ProductPage({route, navigation}) {
-  const {itemID, name, stock, expiryDate} = route.params;
+  const {itemID, name, stock} = route.params;
   const [productID, setProductID] = useState();
   const [count, setCount] = useState(0);
   const [editMode, setEditMode] = useState();
   const [productList, setList] = useState();
   const [productName, setProductName] = useState(name);
   const [productStocks, setProductStocks] = useState(stock);
-  const [productExpiryDate, setProductExpiry] = useState(expiryDate);
+  const [productExpiryDate, setProductExpiry] = useState();
   const [ready, setReady] = useState(false);
 
   // useEffect(() => {
@@ -54,10 +54,10 @@ export default function ProductPage({route, navigation}) {
   // }, [productID]);
 
   useLayoutEffect(() => {
-    getDataStored().then(setID())
-    
+    getDataStored().then(setID());
+
     ToastAndroid.show('A pikachu appeared nearby !', ToastAndroid.SHORT);
-    
+
     // navigation.setOptions({
     //   headerRight: () => (
     //     <Pressable
@@ -70,25 +70,25 @@ export default function ProductPage({route, navigation}) {
     //     </Pressable>
     //   ),
     // });
-  },[ready]);
+  }, [ready]);
 
   //TODO add the state for the edited items
   //TODO find the item in array to edit
   //TODO only save when save button is pressed
   const setID = () => {
-    console.log('SET ID')
+    console.log('SET ID');
     for (let i in productList) {
       if (productList[i].itemName === name) {
-        console.log('FOUND ID')
+        console.log('FOUND ID');
         setProductID(i);
-        setProductName(productList[i].itemName)
-        setProductStocks(productList[i].stock)
-        setProductExpiry(productList[i].expiryDate)
+        setProductName(productList[i].itemName);
+        setProductStocks(productList[i].stock);
+        setProductExpiry(productList[i].expiryDate);
         // console.log(productList[i].itemName);
         //   productList[i].expiryDate = productExpiryDate
         //   productList[i].stock = productStocks;
         // console.log (productList)
-       
+
         break;
       } else {
         console.log('SET ID: Did not find');
@@ -101,7 +101,6 @@ export default function ProductPage({route, navigation}) {
   // };
 
   const updateData = () => {
- 
     productList[productID].itemName = productName;
     productList[productID].stock = productStocks;
     productList[productID].expiryDate = productExpiryDate;
@@ -137,80 +136,78 @@ export default function ProductPage({route, navigation}) {
       list = await AsyncStorage.getItem('itemList');
       setList(JSON.parse(list));
       console.log('GET DATA STORED: Got the List');
-      
-    setReady(true)
-     
+
+      setReady(true);
     } catch (error) {
       console.log('GET DATA STORED: ' + error.message);
     }
-    
-    
   };
 
   return (
- 
-      
+    <View>
+      {editMode ? (
+        //TODO convert to text fields in edit mode
         <View>
-          {editMode ? (
-            //TODO convert to text fields in edit mode
-            <View>
-              {/* TODO save function  */}
-              <TextInput
+          {/* TODO save function  */}
+          <TextInput
             onChangeText={(text) => setProductName(text)}
             style={{marginBottom: '1%'}}
             placeholder="Name of Product"
             defaultValue={productName}
-            
           />
           <TextInput
             onChangeText={(text) => setProductStocks(text)}
             style={{marginBottom: '1%'}}
             placeholder="No of Stocks"
-            keyboardType='numeric'
+            keyboardType="numeric"
           />
           <TextInput
             onChangeText={(text) => setProductExpiry(text)}
             style={{marginBottom: 20}}
             placeholder="Expiry Date"
           />
-              <Button
-                title="Save"
-                onPress={() => {
-                  updateData();
-                  setEditMode(false);
-                }}
-              />
-            </View>
-          ) : (
-            <View style={{padding: '5%', borderRadius: 5}}>
-              <Text
-                style={{
-                  color: colorSchemes().textColor,
-                  marginBottom: 10,
-                  fontWeight: 'bold',
-                }}>
-               {productName}
-              </Text>
-              <Text style={{color: colorSchemes().textColor, marginBottom: 10}}>
-                {productStocks} pcs left{' '}
-              </Text>
-
-              <Text style={{color: colorSchemes().textColor, marginBottom: 10}}>
-                {moment(productExpiryDate).format('MMMM DD, YYYY')}{' '}
-              </Text>
-              <Button
-                title="Edit"
-                onPress={() => {
-                  // updateData();
-                  setEditMode(true);
-                  console.log(productList);
-        
-                }}
-              />
-            </View>
-          )}
+          <Button
+            title="Save"
+            onPress={() => {
+              updateData();
+              setEditMode(false);
+            }}
+          />
         </View>
-     
- 
+      ) : (
+        <View style={{padding: '5%', borderRadius: 5}}>
+          <Text
+            style={{
+              color: colorSchemes().textColor,
+              marginBottom: 10,
+              fontWeight: 'bold',
+            }}>
+            {productName}
+          </Text>
+          <Text style={{color: colorSchemes().textColor, marginBottom: 10}}>
+            {productStocks} pcs left{' '}
+          </Text>
+
+          <Text style={{color: colorSchemes().textColor, marginBottom: 10}}>
+            {moment(productExpiryDate).format('MMMM DD, YYYY')}{' '}
+          </Text>
+          <Button
+            title="Edit"
+            onPress={() => {
+              // updateData();
+              setEditMode(true);
+              console.log(productList);
+            }}
+          />
+
+          <Button
+            title="Go back"
+            onPress={() => {
+              navigation.dispatch(StackActions.popToTop());
+            }}
+          />
+        </View>
+      )}
+    </View>
   );
 }
