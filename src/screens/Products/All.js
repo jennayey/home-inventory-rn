@@ -2,25 +2,18 @@ import React, {Component, useState, useEffect, useLayoutEffect} from 'react';
 import {Button, View, Text, FlatList, Modal, TextInput} from 'react-native';
 import ProductEntry from '../../components/Product.Entry';
 import colorSchemes from '../../styles/themes';
-
 import {
   useNavigation,
-  useIsFocused,
   useFocusEffect,
 } from '@react-navigation/native';
-// import {set} from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-import {
-  TouchableHighlight,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
 function AllProductsScreen() {
   const navigation = useNavigation();
 
   const [items, addItems] = useState();
-  const [currentItem, setNewItem] = useState();
+  const [lowStock, addLowStock] = useState()
   const [count, changeCount] = useState('0');
   const [addItemModal, addItemModalVisible] = useState(false);
   const [itemName, setItemName] = useState('');
@@ -29,25 +22,23 @@ function AllProductsScreen() {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   //TODO 
   useEffect(() => {
-    storeData().then(console.log('RUNNING'));
+    storeData().then(console.log('RUNNING'))
   }, [count, itemExpiry]);
 
   useFocusEffect(
     React.useCallback(() => {
       getDataStored()
       console.log('FOCUS')
-      return () => {
       
+      return () => {
           console.log('UNFOCUS')
         // Do something when the screen is unfocused
         // Useful for cleanup functions
       };
     }, [])
   );
-
   useLayoutEffect(() => {
-    getDataStored().then(getDataStored());
-    console.log('Runnig Layout');
+    getDataStored().then(getDataStored());  
   }, []);
 
   const storeData = async () => {
@@ -106,8 +97,6 @@ function AllProductsScreen() {
     changeCount(count + 1);
     console.log("ADD PRODUCTS:" + moment().diff(itemExpiry, 'days'))
   };
- 
-
   const getAllKeys = async () => {
     let keys = [];
     try {
@@ -115,7 +104,6 @@ function AllProductsScreen() {
     } catch (e) {
       // read key error
     }
-
     // console.log('Test' + keys)
     // example console.log result:
     // ['@MyApp_user', '@MyApp_key']
@@ -124,11 +112,9 @@ function AllProductsScreen() {
     setDatePickerVisibility(true);
     console.log('View Date');
   };
-
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
-
   const handleConfirm = (date) => {
     console.log('A date has been picked: ', date);
     console.log (moment().toDate())
