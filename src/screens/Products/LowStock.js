@@ -20,9 +20,9 @@ const [lowStock, addLowStock] = useState()
   const [itemStock, setItemStock] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   //TODO 
-  useEffect(() => {
-    storeData().then(console.log('RUNNING'))
-  }, [count, itemExpiry]);
+//   useEffect(() => {
+//     storeData().then(console.log('RUNNING'))
+//   }, [count, itemExpiry]);
 
   useFocusEffect(
     React.useCallback(() => {
