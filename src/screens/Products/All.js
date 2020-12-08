@@ -9,8 +9,8 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-function AllProductsScreen() {
-  const navigation = useNavigation();
+function AllProductsScreen({navigation, route}) {
+
 
   const [items, addItems] = useState();
   const [lowStock, addLowStock] = useState()
@@ -23,6 +23,9 @@ function AllProductsScreen() {
   //TODO 
   useEffect(() => {
     storeData().then(console.log('RUNNING'))
+    navigation.setOptions({
+      title: count === '' ? 'All' : 'All (' + count + ')',
+    });
   }, [count, itemExpiry]);
 
   useFocusEffect(
@@ -39,6 +42,7 @@ function AllProductsScreen() {
   );
   useLayoutEffect(() => {
     getDataStored().then(getDataStored());  
+    
   }, []);
 
   const storeData = async () => {
@@ -240,16 +244,15 @@ function AllProductsScreen() {
         style={{color: colorSchemes().textColor, paddingVertical: 10}}>
         //TO DO: Sort Function here
       </Button>
-      <Button onPress={getDataStored} title="get data" />
+      {/* <Button onPress={getDataStored} title="get data" />
       <Button onPress={storeData} title="store Data" />
       <Button
         onPress={() => {
           clearData();
         }}
         title="Clear Data"
-      />
-      <Text>Total products: {count}</Text>
-      <FlatList
+      /> */}
+       <FlatList
         showsVerticalScrollIndicator={false}
         style={{width: '90%'}}
         data={items}

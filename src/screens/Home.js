@@ -18,17 +18,47 @@ import LowStockProductsScreen from '../screens/Products/LowStock';
 import ProductPage from '../screens/Products/ProductPage';
 import colorSchemes from '../styles/themes';
 import {color} from 'react-native-reanimated';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 const HomeStack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 const TopTabs = createMaterialTopTabNavigator();
 
 const stackHeaderOptions = {
-  headerTitleAlign: 'center',
+  headerTitleAlign: 'left',
+  headerStyle: {
+    shadowOpacity: 0,
+    elevation: 0,
+    height: 70
+  },
+  headerTitleContainerStyle: {
+   paddingTop: 30,
+    
+  },
+  headerTitleStyle: {
+    fontSize: 25,
+  },
+};
+
+const productPageHeaderOptions = {
+  headerTitleAlign: 'left',
   headerStyle: {
     shadowOpacity: 0,
     elevation: 0,
   },
+  headerTitleContainerStyle: {
+    paddingTop: 15,
+  },
+  headerLeftContainerStyle: {
+    paddingTop: 15,
+  },
+
+  headerTitleStyle: {
+    fontSize: 20,
+
+  },
+  headerTitle: 'Edit Product'
 };
+
 
 export default function HomeScreen() {
   const MyTheme = {
@@ -45,8 +75,18 @@ export default function HomeScreen() {
   };
   function ProductTopTabs() {
     return (
-      <TopTabs.Navigator>
-        <TopTabs.Screen name="All" component={AllProductsScreen} />
+      <TopTabs.Navigator
+        tabBarOptions={{
+          tabStyle: {width: 'auto', paddingTop: 20},
+          inactiveTintColor: 'grey',
+          activeTintColor: colorSchemes().primaryColor,
+          labelStyle: {fontSize: 13, fontWeight: 'bold'},
+          indicatorStyle: {height: 3}
+        }}>
+        <TopTabs.Screen
+          name="All"
+          component={AllProductsScreen}
+        />
         <TopTabs.Screen name="Expiring" component={ExpiringProductsScreen} />
         <TopTabs.Screen name="Low Stock" component={LowStockProductsScreen} />
       </TopTabs.Navigator>
@@ -73,9 +113,10 @@ export default function HomeScreen() {
           options={stackHeaderOptions}
         />
         <HomeStack.Screen
-        name="ProductPage"
-        component={ProductPage}
-        options={stackHeaderOptions}/>
+          name="ProductPage"
+          component={ProductPage}
+          options={productPageHeaderOptions}
+        />
       </HomeStack.Navigator>
     );
   }

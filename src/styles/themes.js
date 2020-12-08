@@ -8,6 +8,7 @@ import {getTheme, setTheme} from '../utils/ManageThemeContexts'
     primaryBackgroundColor: darkTheme ? '#0f053d' : '#FFFFFF',
     secondaryBackgroundColor: darkTheme ? '#000' : '#F3F8FF',
     textColor: darkTheme ? '#FFFFFF' : '#0B2F5D',
+    subtitleTextColor: darkTheme ? '#f2f4f5' : '#758496',
     secondaryTextColor: darkTheme ? '#' : '#AD0000',
     accentColor: darkTheme ? '#1a0b5e': '#172CE8',
     navTextColor: darkTheme ? '#FFFFFF' : '#172CE8',

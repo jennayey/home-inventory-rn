@@ -22,18 +22,18 @@ export default function ProductEntry({item}) {
         <Text
           style={{
             color: colorSchemes().textColor,
-            marginBottom: 10,
-            fontWeight: 'bold',
+            marginBottom: 5,
+            fontSize: 16
           }}>
           {item.itemName}
         </Text>
-        <Text style={{color: colorSchemes().textColor, marginBottom: 10}}>
-          {item.stock} pcs left
+        <Text style={{color: colorSchemes().subtitleTextColor, marginBottom: 5}}>
+          {item.stock} pcs left • Expires in {-moment().diff(item.expiryDate, 'days')} day/s
         </Text>
 
-        <Text style={{color: colorSchemes().textColor, marginBottom: 10}}>
+        {/* <Text style={{color: colorSchemes().subtitleTextColor, marginBottom: 5}}>
           {moment(item.expiryDate).format('MMMM DD, YYYY')}. Expires in {-moment().diff(item.expiryDate, 'days')} day/s
-        </Text>
+        </Text> */}
       </View>
     </Pressable>
   );
