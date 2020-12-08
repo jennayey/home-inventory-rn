@@ -158,7 +158,7 @@ export default function HomeScreen() {
           },
           labelPosition: 'below-icon',
         }}>
-        <BottomTabs.Screen name="Home" component={HomeStackNav} />
+        <BottomTabs.Screen name="Dashboard" component={HomeStackNav} />
         <BottomTabs.Screen name="Products" component={ProductsStack} />
         <BottomTabs.Screen name="Alerts" component={AlertsStack} />
         <BottomTabs.Screen name="Settings" component={SettingStack} />

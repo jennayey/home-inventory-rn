@@ -2,6 +2,7 @@ import React, {Component, useState, useEffect, useLayoutEffect} from 'react';
 import {Button, View, Text, FlatList, Modal, TextInput} from 'react-native';
 import ProductEntry from '../../components/Product.Entry';
 import colorSchemes from '../../styles/themes';
+import Container from '../../components/Container';
 import {
   useNavigation,
   useFocusEffect,
@@ -53,24 +54,15 @@ function ExpiringProductScreen() {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: '5%',
-      }}>
-    
-
-  
+    <Container>
       <Text>Total products: {count}</Text>
       <FlatList
         showsVerticalScrollIndicator={false}
-        style={{width: '90%'}}
+        style={{width: '100%'}}
         data={items}
         renderItem={({item}) => <ProductEntry item={item} />}
       />
-    </View>
+    </Container>
   );
 }
 

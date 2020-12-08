@@ -9,7 +9,9 @@ export const globalStyles = StyleSheet.create({
       },
 
       text: {
-        fontSize: 40,
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#758496',
         textAlign: 'center',
       },
   });

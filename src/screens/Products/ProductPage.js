@@ -213,7 +213,7 @@ export default function ProductPage({route, navigation}) {
             }}>
             {productName}
           </Text>
-          <Text style={{color: colorSchemes().textColor, marginBottom: 10}}>
+          <Text style={{color: colorSchemes().textColor, marginBottom: 5}}>
             {productStocks} pcs left{' '}
           </Text>
 

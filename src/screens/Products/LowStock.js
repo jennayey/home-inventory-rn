@@ -2,6 +2,8 @@ import React, {Component, useState, useEffect, useLayoutEffect} from 'react';
 import {Button, View, Text, FlatList, Modal, TextInput} from 'react-native';
 import ProductEntry from '../../components/Product.Entry';
 import colorSchemes from '../../styles/themes';
+import Container from '../../components/Container';
+
 import {
   useNavigation,
   useFocusEffect,
@@ -9,15 +11,15 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-function LowStockProductScreen() {
+function LowStockProductScreen({navigation}) {
   const [items, addItems] = useState();
   const [count, changeCount] = useState('0');
+
   useFocusEffect(
     React.useCallback(() => {
       getDataStored()
       console.log('FOCUS')
       return () => {
-          console.log('UNFOCUS')
         // Do something when the screen is unfocused
         // Useful for cleanup functions
       };
@@ -25,8 +27,10 @@ function LowStockProductScreen() {
   );
   useLayoutEffect(() => {
     getDataStored().then(getDataStored());
-  
-  }, []);
+    // navigation.setOptions({
+    //   title: count === '' ? 'Low stock' : 'Low Stock (' + count + ')',
+    // });
+  }, [navigation, count]);
 
   //TODO: add function to check if same key exists
 
@@ -45,7 +49,7 @@ function LowStockProductScreen() {
       } else {
         addItems([]);
       }
-      changeCount(JSON.parse(keys[0][1]));
+      changeCount(list.length);
     } catch (error) {
       // Error retrieving data
       console.log('HT ' + error.message);
@@ -53,24 +57,15 @@ function LowStockProductScreen() {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: '5%',
-      }}>
-    
-
-  
+    <Container>
       <Text>Total products: {count}</Text>
       <FlatList
         showsVerticalScrollIndicator={false}
-        style={{width: '90%'}}
+        style={{width: '100%'}}
         data={items}
         renderItem={({item}) => <ProductEntry item={item} />}
       />
-    </View>
+    </Container>
   );
 }
 
