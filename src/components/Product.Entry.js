@@ -23,7 +23,7 @@ export default function ProductEntry({item}) {
           style={{
             color: colorSchemes().textColor,
             marginBottom: 5,
-            fontSize: 16
+            fontSize: 17
           }}>
           {item.itemName}
         </Text>

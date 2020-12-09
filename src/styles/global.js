@@ -15,3 +15,7 @@ export const globalStyles = StyleSheet.create({
         textAlign: 'center',
       },
   });
+
+  // labels
+  // bold
+  // font size 13

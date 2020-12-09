@@ -37,6 +37,7 @@ const stackHeaderOptions = {
   headerTitleStyle: {
     fontSize: 25,
   },
+  
 };
 
 const productPageHeaderOptions = {
@@ -46,10 +47,14 @@ const productPageHeaderOptions = {
     elevation: 0,
   },
   headerTitleContainerStyle: {
-    paddingTop: 15,
+    paddingTop: 30,
   },
   headerLeftContainerStyle: {
-    paddingTop: 15,
+    paddingTop: 30,
+  },
+  headerRightContainerStyle:{
+    paddingTop: 30,
+    marginRight: '5%'
   },
 
   headerTitleStyle: {
