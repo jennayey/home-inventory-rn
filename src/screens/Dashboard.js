@@ -7,7 +7,7 @@ import Container from '../components/Container';
 import {useNavigation} from '@react-navigation/native';
 import {globalStyles} from '../styles/global'
 import {getTheme, updateTheme} from '../utils/ManageThemeContexts';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 export default function DashboardScreen() {
   const toggleDarkMode = updateTheme();
   const themeWhat = getTheme();
@@ -15,7 +15,7 @@ export default function DashboardScreen() {
   return (
     <Container>
                 <Text style={globalStyles.text}>Dashboard is coming soon</Text>
-
+                <Icon name="code" size={30} color="#900" />
       {/* <Button title="Dark mode test" onPress={toggleDarkMode}>Dark mode</Button> */}
     </Container>
   );

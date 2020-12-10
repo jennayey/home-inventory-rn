@@ -7,7 +7,7 @@ import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import DashboardScreen from './Dashboard';
 import AlertsScreen from './Alerts';
 import SettingsScreen from './Settings';
@@ -18,7 +18,7 @@ import LowStockProductsScreen from '../screens/Products/LowStock';
 import ProductPage from '../screens/Products/ProductPage';
 import colorSchemes from '../styles/themes';
 import {color} from 'react-native-reanimated';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 const HomeStack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 const TopTabs = createMaterialTopTabNavigator();
@@ -28,16 +28,14 @@ const stackHeaderOptions = {
   headerStyle: {
     shadowOpacity: 0,
     elevation: 0,
-    height: 70
+    height: 70,
   },
   headerTitleContainerStyle: {
-   paddingTop: 30,
-    
+    paddingTop: 30,
   },
   headerTitleStyle: {
     fontSize: 25,
   },
-  
 };
 
 const productPageHeaderOptions = {
@@ -52,18 +50,16 @@ const productPageHeaderOptions = {
   headerLeftContainerStyle: {
     paddingTop: 30,
   },
-  headerRightContainerStyle:{
+  headerRightContainerStyle: {
     paddingTop: 30,
-    marginRight: '5%'
+    marginRight: '5%',
   },
 
   headerTitleStyle: {
     fontSize: 20,
-
   },
-  headerTitle: 'Edit Product'
+  headerTitle: 'Edit Product',
 };
-
 
 export default function HomeScreen() {
   const MyTheme = {
@@ -86,12 +82,9 @@ export default function HomeScreen() {
           inactiveTintColor: 'grey',
           activeTintColor: colorSchemes().primaryColor,
           labelStyle: {fontSize: 13, fontWeight: 'bold'},
-          indicatorStyle: {height: 3}
+          indicatorStyle: {height: 3},
         }}>
-        <TopTabs.Screen
-          name="All"
-          component={AllProductsScreen}
-        />
+        <TopTabs.Screen name="All" component={AllProductsScreen} />
         <TopTabs.Screen name="Expiring" component={ExpiringProductsScreen} />
         <TopTabs.Screen name="Low Stock" component={LowStockProductsScreen} />
       </TopTabs.Navigator>
@@ -163,7 +156,15 @@ export default function HomeScreen() {
           },
           labelPosition: 'below-icon',
         }}>
-        <BottomTabs.Screen name="Dashboard" component={HomeStackNav} />
+        <BottomTabs.Screen
+          name="Dashboard"
+          component={HomeStackNav}
+          options={{
+            tabBarIcon: ({color, size}) => (
+              <Icon name="home" color='blue' size={20} />
+            ),
+          }}
+        />
         <BottomTabs.Screen name="Products" component={ProductsStack} />
         <BottomTabs.Screen name="Alerts" component={AlertsStack} />
         <BottomTabs.Screen name="Settings" component={SettingStack} />

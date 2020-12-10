@@ -27,7 +27,8 @@
     "react-native-safe-area-context": "^3.1.4",
     "react-native-screens": "^2.10.1",
     "react-native-tab-view": "^2.15.1",
-    "react-native-themed-styles": "0.0.4"
+    "react-native-themed-styles": "0.0.4",
+    "react-native-vector-icons": "^7.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
