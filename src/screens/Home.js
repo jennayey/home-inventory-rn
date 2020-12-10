@@ -22,7 +22,9 @@ import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 const HomeStack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 const TopTabs = createMaterialTopTabNavigator();
-
+const iconStyles =  {
+  marginBottom: 15
+}
 const stackHeaderOptions = {
   headerTitleAlign: 'left',
   headerStyle: {
@@ -161,13 +163,25 @@ export default function HomeScreen() {
           component={HomeStackNav}
           options={{
             tabBarIcon: ({color, size}) => (
-              <Icon name="home" color='blue' size={20} />
+              <Icon name="dashboard" color={color} size={size} style={iconStyles}/>
             ),
           }}
         />
-        <BottomTabs.Screen name="Products" component={ProductsStack} />
-        <BottomTabs.Screen name="Alerts" component={AlertsStack} />
-        <BottomTabs.Screen name="Settings" component={SettingStack} />
+        <BottomTabs.Screen name="Products" component={ProductsStack} options={{
+            tabBarIcon: ({color, size}) => (
+              <Icon name="fastfood" color={color} size={size} style={iconStyles}/>
+            ),
+          }}/>
+        <BottomTabs.Screen name="Alerts" component={AlertsStack}options={{
+            tabBarIcon: ({color, size}) => (
+              <Icon name="notifications" color={color} size={size} style={iconStyles}/>
+            ),
+          }} />
+        <BottomTabs.Screen name="Settings" component={SettingStack} options={{
+            tabBarIcon: ({color, size}) => (
+              <Icon name="settings" color={color} size={size} style={iconStyles}/>
+            ),
+          }}/>
       </BottomTabs.Navigator>
     </NavigationContainer>
   );

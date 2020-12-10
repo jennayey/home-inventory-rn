@@ -134,7 +134,7 @@ function AllProductsScreen({navigation, route}) {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-around',
-          marginBottom: 30
+          marginBottom: 30,
         }}>
         <View
           style={{
@@ -144,7 +144,7 @@ function AllProductsScreen({navigation, route}) {
             flexGrow: 1,
             marginRight: 10,
             justifyContent: 'center',
-            paddingLeft: 10
+            paddingLeft: 10,
           }}>
           <Text>Search</Text>
         </View>
@@ -158,11 +158,11 @@ function AllProductsScreen({navigation, route}) {
           />
         </View>
         <Button
-        onPress={() => {
-          clearData();
-        }}
-        title="Clear"
-      />
+          onPress={() => {
+            clearData();
+          }}
+          title="Clear"
+        />
       </View>
       <Modal
         animationType="slide"
@@ -172,6 +172,136 @@ function AllProductsScreen({navigation, route}) {
           Alert.alert('Modal has been closed.');
         }}>
         <View
+          style={{
+            margin: '5%',
+            backgroundColor: 'white',
+            paddingHorizontal: '5%',
+            borderRadius: 10,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 50,
+              height: -20,
+            },
+            shadowOpacity: 0.5,
+            shadowRadius: 3.84,
+            elevation: 10,
+          }}>
+          <View style={{marginVertical: 20}}>
+            <Text
+              style={{
+                textTransform: 'uppercase',
+                color: colorSchemes().primaryColor,
+                fontWeight: 'bold',
+                marginBottom: 10,
+              }}>
+              Add Item
+            </Text>
+            <TextInput
+              style={{padding: 0, marginBottom: 20, fontSize: 25, fontWeight: 'bold'}}
+              onChangeText={(text) => setItemName(text)}
+              placeholder="Name of Product"
+            />
+          </View>
+
+          <View
+            style={{
+              paddingBottom: 20,
+            }}>
+            <Text
+              style={{
+                textTransform: 'uppercase',
+                color: 'black',
+                fontSize: 10,
+                fontWeight: 'bold',
+              }}>
+              Stocks
+            </Text>
+            <TextInput
+              style={{
+                paddingHorizontal: 0,
+                borderColor: '#EEE',
+                borderBottomWidth: 2,
+              }}
+              onChangeText={(text) => setItemStock(text)}
+              placeholder="No of Stocks"
+              keyboardType="numeric"
+            />
+          </View>
+
+          <View
+            style={{
+              marginBottom: 20,
+            }}>
+            <Text
+              style={{
+                textTransform: 'uppercase',
+                color: 'black',
+                fontSize: 10,
+                fontWeight: 'bold',
+              }}>
+              Expiry date
+            </Text>
+            <View
+              style={{
+                marginVertical: 15,
+                justifyContent: 'space-between',
+                alignContent: 'flex-start',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <TextInput
+                onChangeText={(text) => setItemExpiry(text)}
+                style={{
+                  paddingHorizontal: 0,
+                  color: 'black',
+                  borderColor: '#EEE',
+                  borderBottomWidth: 2,
+                  width: '70%',
+                }}
+                placeholder="Set Date"
+                editable={false}
+                value={moment(itemExpiry).format('MMMM DD, YYYY')}
+              />
+
+              <Button
+                style={{marginLeft: 10}}
+                title="Edit Date"
+                onPress={showDatePicker}
+              />
+            </View>
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginTop: '5%',
+            }}>
+            <View
+              style={{
+                width: '45%',
+                justifyContent: 'center',
+                flexDirection: 'row',
+              }}>
+              <Text
+                onPress={() => {
+                  addItemModalVisible(!addItemModal);
+                }}>
+                Cancel
+              </Text>
+            </View>
+            <View style={{width: '50%'}}>
+              <Button
+                title="Add item"
+                onPress={() => {
+                  addProducts();
+                  addItemModalVisible(!addItemModal);
+                }}></Button>
+            </View>
+          </View>
+        </View>
+        {/* <View
           style={{
             // alignItems: 'center',
             margin: '5%',
@@ -227,55 +357,25 @@ function AllProductsScreen({navigation, route}) {
             />
 
             <Button title="Set Date" onPress={showDatePicker} />
-          </View>
-          <DateTimePickerModal
-            isVisible={isDatePickerVisible}
-            mode="date"
-            onConfirm={handleConfirm}
-            onCancel={hideDatePicker}
-            minimumDate={moment().toDate()}
-          />
+          </View> */}
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+          minimumDate={moment().toDate()}
+        />
 
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <View style={{width: '50%'}}>
-              <Button
-                title="Add item"
-                onPress={() => {
-                  addProducts();
-                  addItemModalVisible(!addItemModal);
-                }}></Button>
-            </View>
-            <View
-              style={{
-                width: '50%',
-                justifyContent: 'center',
-                flexDirection: 'row',
-              }}>
-              <Text
-                onPress={() => {
-                  addItemModalVisible(!addItemModal);
-                }}>
-                Cancel
-              </Text>
-            </View>
-          </View>
-        </View>
+        {/* </View> */}
       </Modal>
 
       {/* //TO DO: Sort Function here */}
       {/* <Button onPress={getDataStored} title="get data" />
       <Button onPress={storeData} title="store Data" />
      */}
-      
+
       {count === null ? (
-       
         <Text style={globalStyles.text}>You have no products</Text>
-       
       ) : (
         <FlatList
           showsVerticalScrollIndicator={false}
