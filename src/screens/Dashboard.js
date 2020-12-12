@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, View, Text, Alert} from 'react-native';
+import {Button, View, Text, Alert, TextInput} from 'react-native';
 import 'react-native-gesture-handler';
 import Announcement from '../components/Announcements';
 import Header from '../components/Header.Title';
@@ -9,8 +9,8 @@ import {globalStyles} from '../styles/global';
 import {getTheme, updateTheme} from '../utils/ManageThemeContexts';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import colorSchemes from '../styles/themes';
-import {TextInput} from 'react-native-gesture-handler';
-export default function DashboardScreen() {
+import ProductField from '../components/Product.Field'
+ export default function DashboardScreen() {
   const toggleDarkMode = updateTheme();
   const themeWhat = getTheme();
 
@@ -19,38 +19,8 @@ export default function DashboardScreen() {
       <Text style={globalStyles.text}>Dashboard is coming soon</Text>
       <Icon name="code" size={30} color="#900" />
       {/* <Button title="Dark mode test" onPress={toggleDarkMode}>Dark mode</Button> */}
+      <ProductField title='Stocks' value='3' buttonShow={false} editMode={false}/>
 
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          borderBottomWidth:2,
-          borderColor: '#EEE',
-          paddingVertical: 10
-          
-        }}>
-        <Text
-          style={{
-            textTransform: 'uppercase',
-            color: colorSchemes().subtitleTextColor,
-            marginRight: 10,
-            fontWeight: 'bold',
-         flexBasis: '25%'
-          }}>
-          Stocks
-        </Text>
-        <TextInput
-          style={{
-            borderColor: '#EEE',
-        flexGrow: 1
-          }}
-       
-          placeholder="No of Stocks"
-          keyboardType="numeric"
-        />
-      </View>
       <View
         style={{
           display: 'flex',
@@ -82,7 +52,7 @@ export default function DashboardScreen() {
           placeholder="No of Stocks"
           keyboardType="numeric"
         />
-        <Button title='Set Dates' style={{flexGrow: 1}}/>
+        <Button title='Set Date' style={{flexGrow: 1}}/>
       </View>
     </Container>
   );

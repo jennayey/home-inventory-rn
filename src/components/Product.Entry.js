@@ -7,7 +7,6 @@ import moment from 'moment'
 export default function ProductEntry({item}) {
   const navigation = useNavigation();
   return (
-    // TO DO: Pass items details to product view screen
   <Pressable onPress={() => navigation.navigate('ProductPage', {
     itemID: item.key,
     name: item.itemName,
