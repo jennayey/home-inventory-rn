@@ -16,7 +16,7 @@ import Container from '../../components/Container';
 import {TextInput} from 'react-native-gesture-handler';
 import moment from 'moment';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-
+import ProductField from '../../components/Product.Field'
 export default function ProductPage({route, navigation}) {
   const {itemID, name, stock} = route.params;
   const [productID, setProductID] = useState();
@@ -128,7 +128,6 @@ export default function ProductPage({route, navigation}) {
         onCancel={hideDatePicker}
         minimumDate={moment().toDate()}
       />
-
       {editMode ? (
         //TODO convert to text fields in edit mode
         <View style={{width: '100%'}}>
@@ -149,82 +148,16 @@ export default function ProductPage({route, navigation}) {
               defaultValue={productName}
             />
           </View>
-
-          <View
-            style={{
-              borderBottomWidth: 1,
-              paddingVertical: 20,
-              borderBottomColor: '#EEE',
-            }}>
-            <Text
-              style={{
-                textTransform: 'uppercase',
-                color: colorSchemes().subtitleTextColor,
-              }}>
-              Stocks
-            </Text>
-            <TextInput
-                style={{paddingHorizontal: 0, paddingBottom: 0}}
-              onChangeText={(text) => setProductStocks(text)}
-              placeholder="No of Stocks"
-              keyboardType="numeric"
-              defaultValue={productStocks}
-            />
-          </View>
-
-          <View
-            style={{
-              marginBottom: 20,
-
-              borderBottomWidth: 1,
-              paddingVertical: 10,
-              borderBottomColor: '#EEE',
-            }}>
-            <Text
-              style={{
-                textTransform: 'uppercase',
-                color: colorSchemes().subtitleTextColor,
-              }}>
-              Expiry date
-            </Text>
-            <View
-              style={{
-                marginVertical: 15,
-                justifyContent: 'space-between',
-                alignContent: 'center',
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <TextInput
-                onChangeText={(text) => setProductExpiry(text)}
-                style={{
-                  padding: 0,
-                  margin: 0,
-                  color: 'black',
-                  textAlign: 'right',
-                }}
-                editable={false}
-                value={moment(productExpiryDate).format('MMMM DD, YYYY')}
-              />
-
-              <Button
-                style={{marginLeft: 10}}
-                title="Edit Date"
-                onPress={showDatePicker}
-              />
-            </View>
-          </View>
-
+          <ProductField title={'Stocks'} value={productStocks} onChangeText={(text) => setProductStocks(text)} editMode/>
+          <ProductField title={'Sample'} value={moment(productExpiryDate).format('MMMM DD, YYYY')} onChangeText={(text) => setProductExpiry(text)}onPress={showDatePicker} buttonShow editMode/>
           <Button
             title="Save"
             onPress={() => {
               updateData();
               setEditMode(false);
               ToastAndroid.show('Item saved!', ToastAndroid.SHORT);
-
             }}
           />
-
           <Button
             title="Go back"
             onPress={() => {
@@ -232,44 +165,7 @@ export default function ProductPage({route, navigation}) {
             }}
           />
         </View>
-      ) : (
-        // <View>
-        //   <TextInput
-        //     onChangeText={(text) => setProductName(text)}
-        //     placeholder="Name of Product"
-        //     defaultValue={productName}
-        //   />
-        //   <TextInput
-        //     onChangeText={(text) => setProductStocks(text)}
-        //     placeholder="No of Stocks"
-        //     keyboardType="numeric"
-        //     defaultValue={productStocks}
-        //   />
-        //   <View
-        //     style={{
-        //       marginVertical: 15,
-        //       justifyContent: 'space-between',
-        //       alignContent: 'center',
-        //       flexDirection: 'row',
-        //       alignItems: 'center',
-        //     }}>
-        //     <TextInput
-        //       onChangeText={(text) => setProductExpiry(text)}
-        //       style={{color: 'black'}}
-        //       editable={false}
-        //       value={moment(productExpiryDate).format('MMMM DD, YYYY')}
-        //     />
-
-        //     <Button title="Edit Date" onPress={showDatePicker} />
-        //   </View>
-        //   <Button
-        //     title="Save"
-        //     onPress={() => {
-        //       updateData();
-        //       setEditMode(false);
-        //     }}
-        //   />
-        // </View>
+      ) : (     
         <View style={{width: '100%'}}>
           <View style={{marginVertical: 20}}>
             <Text
@@ -279,52 +175,9 @@ export default function ProductPage({route, navigation}) {
               }}>
               {productName}
             </Text>
-          </View>
-
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              borderBottomWidth: 1,
-              paddingVertical: 20,
-              borderBottomColor: '#EEE',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                textTransform: 'uppercase',
-                color: colorSchemes().subtitleTextColor,
-              }}>
-              Stocks
-            </Text>
-            <Text style={{color: colorSchemes().textColor}}>
-              {productStocks} pcs left{' '}
-            </Text>
-          </View>
-
-          <View
-            style={{
-              marginBottom: 20,
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              borderBottomWidth: 1,
-              paddingVertical: 20,
-              borderBottomColor: '#EEE',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                textTransform: 'uppercase',
-                color: colorSchemes().subtitleTextColor,
-              }}>
-              Expiry date
-            </Text>
-            <Text style={{color: colorSchemes().textColor}}>
-              {moment(productExpiryDate).format('MMMM DD, YYYY')}{' '}
-            </Text>
-          </View>
+          </View>  
+          <ProductField title={'Stocks'} value={productStocks} />
+          <ProductField title={'Expiry date'} value={moment(productExpiryDate).format('MMMM DD, YYYY')} />
         </View>
       )}
     </Container>
