@@ -51,7 +51,7 @@ export default function ProductField(props) {
           placeholder={props.placeholderText || 'Placeholder'}
           keyboardType={props.inputType || 'default'}
           value={props.value}
-          editable={props.editMode || false}
+          editable={props.editMode ? props.buttonShow ? false : true : false}
         />
       </View>
       {props.buttonShow ? (
