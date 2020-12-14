@@ -151,7 +151,7 @@ function AllProductsScreen({navigation, route}) {
         <View style={{marginRight: 10}}>
           <Button
             onPress={() => {
-              addItemModalVisible(!addItemModal);
+              navigation.navigate('AddItem');
             }}
             title="Add Item"
             style={{color: colorSchemes().textColor, paddingVertical: 10}}
@@ -175,7 +175,6 @@ function AllProductsScreen({navigation, route}) {
           style={{
             margin: '5%',
             backgroundColor: 'white',
-            paddingHorizontal: '5%',
             borderRadius: 10,
             shadowColor: '#000',
             shadowOffset: {
@@ -189,10 +188,13 @@ function AllProductsScreen({navigation, route}) {
           <View style={{marginVertical: 20}}>
             <Text
               style={{
-                textTransform: 'uppercase',
+                // textTransform: 'uppercase',
                 color: colorSchemes().primaryColor,
                 fontWeight: 'bold',
+                fontSize: 15,
                 marginBottom: 10,
+                borderBottomWidth: 2,
+                borderColor: '#EEE',
               }}>
               Add Item
             </Text>
@@ -301,63 +303,7 @@ function AllProductsScreen({navigation, route}) {
             </View>
           </View>
         </View>
-        {/* <View
-          style={{
-            // alignItems: 'center',
-            margin: '5%',
-            paddingVertical: '10%',
-            paddingHorizontal: '5%',
-            backgroundColor: 'white',
-            borderRadius: 10,
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 50,
-              height: -20,
-            },
-            shadowOpacity: 0.5,
-            shadowRadius: 3.84,
-            elevation: 10,
-          }}>
-          <Text
-            style={{
-              color: colorSchemes().textColor,
-              fontSize: 18,
-              fontWeight: 'bold',
-              marginBottom: 30,
-            }}>
-            Add a new item
-          </Text>
-
-          <TextInput
-            onChangeText={(text) => setItemName(text)}
-            style={{marginBottom: '1%'}}
-            placeholder="Name of Product"
-          />
-          <TextInput
-            onChangeText={(text) => setItemStock(text)}
-            style={{marginBottom: '1%'}}
-            placeholder="No of Stocks"
-            keyboardType="numeric"
-          />
-
-          <View
-            style={{
-              marginVertical: 15,
-              justifyContent: 'space-between',
-              alignContent: 'center',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <TextInput
-              onChangeText={(text) => setItemExpiry(text)}
-              style={{color: 'black'}}
-              placeholder="TEst"
-              editable={false}
-              value={moment(itemExpiry).format('MMMM DD, YYYY')}
-            />
-
-            <Button title="Set Date" onPress={showDatePicker} />
-          </View> */}
+      
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"

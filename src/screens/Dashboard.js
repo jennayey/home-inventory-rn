@@ -17,22 +17,9 @@ export default function DashboardScreen() {
   return (
     <Container>
       <Text style={globalStyles.text}>Dashboard is coming soon</Text>
-      <Icon name="code" size={30} color="#900" />
+      {/* <Icon name="code" size={30} color="#900" /> */}
       {/* <Button title="Dark mode test" onPress={toggleDarkMode}>Dark mode</Button> */}
-      <ProductField
-        title="Expiration Date"
-        value="5"
-      />
-      <ProductField
-        title="Expiration"
-        value="3"
-        buttonShow
-        buttonTitle='Set Date'
-      inputOptions={{
-        inputType: 'numeric'
-      }}
-        editMode
-      />
+    
     </Container>
   );
 }

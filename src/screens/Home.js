@@ -16,15 +16,16 @@ import AllProductsScreen from '../screens/Products/All';
 import ExpiringProductsScreen from '../screens/Products/Expiring';
 import LowStockProductsScreen from '../screens/Products/LowStock';
 import ProductPage from '../screens/Products/ProductPage';
+import AddItem from "../screens/Products/AddItem";
 import colorSchemes from '../styles/themes';
 import {color} from 'react-native-reanimated';
 import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 const HomeStack = createStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 const TopTabs = createMaterialTopTabNavigator();
-const iconStyles =  {
-  marginBottom: 15
-}
+const iconStyles = {
+  marginBottom: 15,
+};
 const stackHeaderOptions = {
   headerTitleAlign: 'left',
   headerStyle: {
@@ -117,6 +118,12 @@ export default function HomeScreen() {
           component={ProductPage}
           options={productPageHeaderOptions}
         />
+        <HomeStack.Screen
+          name="AddItem"
+          component={AddItem}
+          options={productPageHeaderOptions}
+        />
+      
       </HomeStack.Navigator>
     );
   }
@@ -158,30 +165,62 @@ export default function HomeScreen() {
           },
           labelPosition: 'below-icon',
         }}>
-        <BottomTabs.Screen
+        {/* <BottomTabs.Screen
           name="Dashboard"
           component={HomeStackNav}
           options={{
             tabBarIcon: ({color, size}) => (
-              <Icon name="dashboard" color={color} size={size} style={iconStyles}/>
+              <Icon
+                name="dashboard"
+                color={color}
+                size={size}
+                style={iconStyles}
+              />
+            ),
+          }}
+        /> */}
+        <BottomTabs.Screen
+          name="Products"
+          component={ProductsStack}
+          options={{
+            tabBarIcon: ({color, size}) => (
+              <Icon
+                name="fastfood"
+                color={color}
+                size={size}
+                style={iconStyles}
+              />
             ),
           }}
         />
-        <BottomTabs.Screen name="Products" component={ProductsStack} options={{
+        <BottomTabs.Screen
+          name="Alerts"
+          component={AlertsStack}
+          options={{
             tabBarIcon: ({color, size}) => (
-              <Icon name="fastfood" color={color} size={size} style={iconStyles}/>
+              <Icon
+                name="notifications"
+                color={color}
+                size={size}
+                style={iconStyles}
+              />
             ),
-          }}/>
-        <BottomTabs.Screen name="Alerts" component={AlertsStack}options={{
+          }}
+        />
+        <BottomTabs.Screen
+          name="Settings"
+          component={SettingStack}
+          options={{
             tabBarIcon: ({color, size}) => (
-              <Icon name="notifications" color={color} size={size} style={iconStyles}/>
+              <Icon
+                name="settings"
+                color={color}
+                size={size}
+                style={iconStyles}
+              />
             ),
-          }} />
-        <BottomTabs.Screen name="Settings" component={SettingStack} options={{
-            tabBarIcon: ({color, size}) => (
-              <Icon name="settings" color={color} size={size} style={iconStyles}/>
-            ),
-          }}/>
+          }}
+        />
       </BottomTabs.Navigator>
     </NavigationContainer>
   );
