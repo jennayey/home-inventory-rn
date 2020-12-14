@@ -28,7 +28,7 @@ function AddItem({navigation, route}) {
   useEffect(() => {
     storeData().then(console.log('RUNNING'));
     navigation.setOptions({
-      title: count === null ? 'All' : 'All (' + count + ')',
+      title: '',
       headerRight: () => (
         <Button
           onPress={() => alert('This is NOT  button!')}
@@ -145,31 +145,22 @@ function AddItem({navigation, route}) {
         </View>
         <ProductField
           title={'Stocks'}
+          inputType={'numeric'}
           onChangeText={(text) => setItemStock(text)}
+          placeholderText={'No of Stocks'}
           editMode
+          
         />
         <ProductField
           title={'Sample'}
-          value={moment(itemExpiry).format('MMMM DD, YYYY')}
+          buttonTitle={'Set date'}
+
+          value={moment(itemExpiry).format('MMMM DD, YYYY') !== 'Invalid date' ? moment(itemExpiry).format('MMMM DD, YYYY') : 'No selected date' }
           onChangeText={(text) => setItemExpiry(text)}
           onPress={showDatePicker}
-          buttonShow
-          editMode
+           buttonShow
         />
-        {/* <Button
-            title="Save"
-            onPress={() => {
-              updateData();
-              setEditMode(false);
-              ToastAndroid.show('Item saved!', ToastAndroid.SHORT);
-            }}
-          />
-          <Button
-            title="Go back"
-            onPress={() => {
-              navigation.dispatch(StackActions.popToTop());
-            }}
-          /> */}
+    
       </View>
 
       <View

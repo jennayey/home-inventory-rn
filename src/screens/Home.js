@@ -61,8 +61,7 @@ const productPageHeaderOptions = {
   headerTitleStyle: {
     fontSize: 20,
   },
-  headerTitle: 'Edit Product',
-};
+ };
 
 export default function HomeScreen() {
   const MyTheme = {
