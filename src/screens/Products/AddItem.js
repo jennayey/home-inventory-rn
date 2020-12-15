@@ -152,7 +152,7 @@ function AddItem({navigation, route}) {
           
         />
         <ProductField
-          title={'Sample'}
+          title={'Expiry Date'}
           buttonTitle={'Set date'}
 
           value={moment(itemExpiry).format('MMMM DD, YYYY') !== 'Invalid date' ? moment(itemExpiry).format('MMMM DD, YYYY') : 'No selected date' }

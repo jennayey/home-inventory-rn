@@ -149,7 +149,7 @@ export default function ProductPage({route, navigation}) {
             />
           </View>
           <ProductField title={'Stocks'} value={productStocks} onChangeText={(text) => setProductStocks(text)} editMode/>
-          <ProductField title={'Sample'} value={moment(productExpiryDate).format('MMMM DD, YYYY')} onChangeText={(text) => setProductExpiry(text)}onPress={showDatePicker} buttonShow editMode/>
+          <ProductField title={'Expiry Date'} buttonTitle={'Set date'} value={moment(productExpiryDate).format('MMMM DD, YYYY')} onChangeText={(text) => setProductExpiry(text)}onPress={showDatePicker} buttonShow editMode/>
           <Button
             title="Save"
             onPress={() => {

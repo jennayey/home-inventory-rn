@@ -74,16 +74,6 @@ function AllProductsScreen({navigation, route}) {
       console.log('HT ' + error.message);
     }
   };
-  const clearData = async () => {
-    let keys = ['itemList', 'itemCount'];
-    try {
-      await AsyncStorage.multiRemove(keys);
-    } catch (error) {
-      console.log(error.message);
-    }
-    getDataStored();
-  };
-
   const addProducts = () => {
     addItems((prevItems) => {
       return [
@@ -148,7 +138,7 @@ function AllProductsScreen({navigation, route}) {
           }}>
           <Text>Search</Text>
         </View>
-        <View style={{marginRight: 10}}>
+        <View>
           <Button
             onPress={() => {
               navigation.navigate('AddItem');
@@ -157,12 +147,6 @@ function AllProductsScreen({navigation, route}) {
             style={{color: colorSchemes().textColor, paddingVertical: 10}}
           />
         </View>
-        <Button
-          onPress={() => {
-            clearData();
-          }}
-          title="Clear"
-        />
       </View>
       <Modal
         animationType="slide"
@@ -188,7 +172,6 @@ function AllProductsScreen({navigation, route}) {
           <View style={{marginVertical: 20}}>
             <Text
               style={{
-                // textTransform: 'uppercase',
                 color: colorSchemes().primaryColor,
                 fontWeight: 'bold',
                 fontSize: 15,
@@ -199,7 +182,12 @@ function AllProductsScreen({navigation, route}) {
               Add Item
             </Text>
             <TextInput
-              style={{padding: 0, marginBottom: 20, fontSize: 25, fontWeight: 'bold'}}
+              style={{
+                padding: 0,
+                marginBottom: 20,
+                fontSize: 25,
+                fontWeight: 'bold',
+              }}
               onChangeText={(text) => setItemName(text)}
               placeholder="Name of Product"
             />
@@ -303,7 +291,7 @@ function AllProductsScreen({navigation, route}) {
             </View>
           </View>
         </View>
-      
+
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"
@@ -311,15 +299,7 @@ function AllProductsScreen({navigation, route}) {
           onCancel={hideDatePicker}
           minimumDate={moment().toDate()}
         />
-
-        {/* </View> */}
       </Modal>
-
-      {/* //TO DO: Sort Function here */}
-      {/* <Button onPress={getDataStored} title="get data" />
-      <Button onPress={storeData} title="store Data" />
-     */}
-
       {count === null ? (
         <Text style={globalStyles.text}>You have no products</Text>
       ) : (

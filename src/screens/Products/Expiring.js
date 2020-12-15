@@ -10,7 +10,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-function ExpiringProductScreen() {
+function ExpiringProductScreen({navigation, route}) {
   const [items, addItems] = useState();
   const [count, changeCount] = useState('0');
   useFocusEffect(
@@ -26,8 +26,11 @@ function ExpiringProductScreen() {
   );
   useLayoutEffect(() => {
     getDataStored().then(getDataStored());
+navigation.setOptions({
+  title: count === null ? 'Expiring' : 'Expiring (' + count + ')'
+})
   
-  }, []);
+  }, [count]);
 
   //TODO: add function to check if same key exists
 
@@ -55,8 +58,7 @@ function ExpiringProductScreen() {
 
   return (
     <Container>
-      <Text>Total products: {count}</Text>
-      <FlatList
+       <FlatList
         showsVerticalScrollIndicator={false}
         style={{width: '100%'}}
         data={items}
