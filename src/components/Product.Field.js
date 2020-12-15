@@ -52,6 +52,8 @@ export default function ProductField(props) {
           keyboardType={props.inputType || 'default'}
           value={props.value}
           editable={props.editMode ? props.buttonShow ? false : true : false}
+          multiline={props.multiline || false}
+          // textAlignVertical={props.multiline}
           // defaultValue={props.defaultValue || 'default value'}
         />
       </View>

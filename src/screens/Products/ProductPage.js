@@ -25,6 +25,7 @@ export default function ProductPage({route, navigation}) {
   const [productName, setProductName] = useState(name);
   const [productStocks, setProductStocks] = useState(stock);
   const [productExpiryDate, setProductExpiry] = useState();
+  const [productNotes, setProductNotes] = useState();
   const [ready, setReady] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -64,6 +65,7 @@ export default function ProductPage({route, navigation}) {
         setProductName(productList[i].itemName);
         setProductStocks(productList[i].stock);
         setProductExpiry(productList[i].expiryDate);
+        setProductNotes(productList[i].notes)
 
         break;
       } else {
@@ -75,6 +77,7 @@ export default function ProductPage({route, navigation}) {
     productList[productID].itemName = productName;
     productList[productID].stock = productStocks;
     productList[productID].expiryDate = productExpiryDate;
+    productList[productID].notes = productNotes;
     console.log('UPDATE DATA: Updating data');
     storeData();
     console.log('UPDATE DATA 2: Data Saved');
@@ -150,6 +153,8 @@ export default function ProductPage({route, navigation}) {
           </View>
           <ProductField title={'Stocks'} value={productStocks} onChangeText={(text) => setProductStocks(text)} editMode/>
           <ProductField title={'Expiry Date'} buttonTitle={'Set date'} value={moment(productExpiryDate).format('MMMM DD, YYYY')} onChangeText={(text) => setProductExpiry(text)}onPress={showDatePicker} buttonShow editMode/>
+          <ProductField title={'Notes'} value={productNotes} onChangeText={(text) => setProductNotes(text)} editMode/>
+
           <Button
             title="Save"
             onPress={() => {
@@ -178,6 +183,12 @@ export default function ProductPage({route, navigation}) {
           </View>  
           <ProductField title={'Stocks'} value={productStocks} />
           <ProductField title={'Expiry date'} value={moment(productExpiryDate).format('MMMM DD, YYYY')} />
+          {productNotes === undefined ?
+          <></>
+          : 
+          <ProductField title={'Notes'} placeholderText={'No notes'} value={productNotes} />
+        }
+
         </View>
       )}
     </Container>

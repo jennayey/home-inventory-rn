@@ -23,6 +23,7 @@ function AddItem({navigation, route}) {
   const [itemName, setItemName] = useState('');
   const [itemExpiry, setItemExpiry] = useState('');
   const [itemStock, setItemStock] = useState('');
+  const [itemNotes, setItemNotes] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   //TODO
   useEffect(() => {
@@ -100,6 +101,7 @@ function AddItem({navigation, route}) {
           expiryDate: itemExpiry,
           stock: itemStock,
           key: '@' + itemName,
+          notes: itemNotes
           // status:
           //TODO Add price
           //TODO Notes
@@ -160,7 +162,13 @@ function AddItem({navigation, route}) {
           onPress={showDatePicker}
            buttonShow
         />
-    
+     <ProductField
+          title={'Notes'}
+          onChangeText={(text) => setItemNotes(text)}
+          placeholderText={'Add notes here'}
+          editMode
+          multiline
+        />
       </View>
 
       <View
