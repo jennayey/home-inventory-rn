@@ -30,13 +30,13 @@ function AddItem({navigation, route}) {
     storeData().then(console.log('RUNNING'));
     navigation.setOptions({
       title: '',
-      headerRight: () => (
-        <Button
-          onPress={() => alert('This is NOT  button!')}
-          title="Info"
-          color="#fff"
-        />
-      ),
+      // headerRight: () => (
+      //   <Button
+      //     onPress={() => alert('This is NOT  button!')}
+      //     title="Info"
+      //     color="#fff"
+      //   />
+      // ),
     });
   }, [count, itemExpiry]);
 

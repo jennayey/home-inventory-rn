@@ -1,5 +1,5 @@
 import React, {Component, useState, useEffect, useLayoutEffect} from 'react';
-import {Button, View, Text, FlatList, Modal, TextInput} from 'react-native';
+import {Button, View, Text, FlatList, Modal, TextInput, Image, TouchableOpacity} from 'react-native';
 import ProductEntry from '../../components/Product.Entry';
 import colorSchemes from '../../styles/themes';
 import Container from '../../components/Container';
@@ -119,35 +119,7 @@ function AllProductsScreen({navigation, route}) {
   };
   return (
     <Container>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          marginBottom: 30,
-        }}>
-        <View
-          style={{
-            backgroundColor: '#EEEFFF',
-            height: 35,
-            borderRadius: 5,
-            flexGrow: 1,
-            marginRight: 10,
-            justifyContent: 'center',
-            paddingLeft: 10,
-          }}>
-          <Text>Search</Text>
-        </View>
-        <View>
-          <Button
-            onPress={() => {
-              navigation.navigate('AddItem');
-            }}
-            title="Add Item"
-            style={{color: colorSchemes().textColor, paddingVertical: 10}}
-          />
-        </View>
-      </View>
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -301,14 +273,64 @@ function AllProductsScreen({navigation, route}) {
         />
       </Modal>
       {count === null ? (
-        <Text style={globalStyles.text}>You have no products</Text>
+        <View style={{ width:'100%', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50%'}}>
+        <Image
+        // style={styles.tinyLogo}
+        style={{width: 150, height:150}}
+        source={require('../../assets/icon.png')}
+      />
+          <Text style={globalStyles.text}>You have no products yet</Text>
+          <Text style={globalStyles.text}>Add an item to start</Text>
+         <View style={{marginTop: 20}}>
+         <Button
+            onPress={() => {
+              navigation.navigate('AddItem');
+            }}
+            title="Add Item"
+            style={{color: colorSchemes().textColor, paddingVertical: 10, borderRadius:50}}
+          />
+         </View>
+          
+        </View>
       ) : (
+       <View>
+          <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          marginBottom: 30,
+        }}>
+        {/* //TODO Search function */}
+        {/* <View
+          style={{
+            backgroundColor: '#EEEFFF',
+            height: 35,
+            borderRadius: 5,
+            flexGrow: 1,
+            marginRight: 10,
+            justifyContent: 'center',
+            paddingLeft: 10,
+          }}>
+          <Text>Search</Text>
+        </View> */}
+        <View style={{width: '100%'}}>
+          <Button
+            onPress={() => {
+              navigation.navigate('AddItem');
+            }}
+            title="Add Item"
+            style={{color: colorSchemes().textColor, paddingVertical: 10, }}
+          />
+        </View>
+      </View >
         <FlatList
           showsVerticalScrollIndicator={false}
-          style={{width: '100%'}}
+          
           data={items}
           renderItem={({item}) => <ProductEntry item={item} />}
         />
+       </View>
       )}
     </Container>
   );

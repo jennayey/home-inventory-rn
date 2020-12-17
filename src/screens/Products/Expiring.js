@@ -26,9 +26,9 @@ function ExpiringProductScreen({navigation, route}) {
   );
   useLayoutEffect(() => {
     getDataStored().then(getDataStored());
-navigation.setOptions({
-  title: count === null ? 'Expiring' : 'Expiring (' + count + ')'
-})
+// navigation.setOptions({
+//   title: count === null ? 'Expiring' : 'Expiring (' + count + ')'
+// })
   
   }, [count]);
 

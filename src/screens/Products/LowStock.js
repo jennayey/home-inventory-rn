@@ -30,7 +30,10 @@ function LowStockProductScreen({navigation}) {
     // navigation.setOptions({
     //   title: count === '' ? 'Low stock' : 'Low Stock (' + count + ')',
     // });
-  }, [navigation, count]);
+    // navigation.setOptions({
+    //   title: count === null ? 'Low Stock' : 'Low Stock (' + count + ')'
+    // })
+  }, [count]);
 
   //TODO: add function to check if same key exists
 
@@ -58,7 +61,6 @@ function LowStockProductScreen({navigation}) {
 
   return (
     <Container>
-      <Text>Total products: {count}</Text>
       <FlatList
         showsVerticalScrollIndicator={false}
         style={{width: '100%'}}

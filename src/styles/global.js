@@ -14,6 +14,13 @@ export const globalStyles = StyleSheet.create({
         color: '#758496',
         textAlign: 'center',
       },
+      small: {
+        fontSize: 16,
+        fontWeight: '400',
+        color: '#758496',
+        textAlign: 'center',
+        marginTop: 10
+      },
   });
 
   // labels
