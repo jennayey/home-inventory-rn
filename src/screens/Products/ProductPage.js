@@ -9,14 +9,16 @@ import {
   Pressable,
   Modal,
   ToastAndroid,
+  TextInput,
+  TouchableOpacity
 } from 'react-native';
 import colorSchemes from '../../styles/themes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Container from '../../components/Container';
-import {TextInput} from 'react-native-gesture-handler';
 import moment from 'moment';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import ProductField from '../../components/Product.Field'
+import ProductField from '../../components/Product.Field';
+import { globalStyles } from '../../styles/global';
 export default function ProductPage({route, navigation}) {
   const {itemID, name, stock} = route.params;
   const [productID, setProductID] = useState();
@@ -65,7 +67,7 @@ export default function ProductPage({route, navigation}) {
         setProductName(productList[i].itemName);
         setProductStocks(productList[i].stock);
         setProductExpiry(productList[i].expiryDate);
-        setProductNotes(productList[i].notes)
+        setProductNotes(productList[i].notes);
 
         break;
       } else {
@@ -135,14 +137,14 @@ export default function ProductPage({route, navigation}) {
         //TODO convert to text fields in edit mode
         <View style={{width: '100%'}}>
           <View style={{marginVertical: 20}}>
-          <Text
+            <Text
               style={{
                 textTransform: 'uppercase',
                 color: colorSchemes().primaryColor,
                 fontWeight: 'bold',
-                marginBottom: 10
+                marginBottom: 10,
               }}>
-           Edit Mode
+              Edit Mode
             </Text>
             <TextInput
               style={{padding: 0, margin: 0, fontSize: 25}}
@@ -151,11 +153,31 @@ export default function ProductPage({route, navigation}) {
               defaultValue={productName}
             />
           </View>
-          <ProductField title={'Stocks'} value={productStocks} onChangeText={(text) => setProductStocks(text)} editMode/>
-          <ProductField title={'Expiry Date'} buttonTitle={'Set date'} value={moment(productExpiryDate).format('MMMM DD, YYYY')} onChangeText={(text) => setProductExpiry(text)}onPress={showDatePicker} buttonShow editMode/>
-          <ProductField title={'Notes'} value={productNotes} onChangeText={(text) => setProductNotes(text)} editMode/>
+          <ProductField
+            title={'Stocks'}
+            value={productStocks}
+            onChangeText={(text) => setProductStocks(text)}
+            editMode
+          />
+          <ProductField
+            title={'Expiry Date'}
+            buttonTitle={'Set date'}
+            value={moment(productExpiryDate).format('MMMM DD, YYYY')}
+            onChangeText={(text) => setProductExpiry(text)}
+            onPress={showDatePicker}
+            buttonShow
+            editMode
+          />
+          <ProductField
+            title={'Notes'}
+            value={productNotes}
+            onChangeText={(text) => setProductNotes(text)}
+            editMode
+          />
 
-          <Button
+        <View style={{marginTop: 20}}>
+          
+        <Button
             title="Save"
             onPress={() => {
               updateData();
@@ -163,14 +185,16 @@ export default function ProductPage({route, navigation}) {
               ToastAndroid.show('Item saved!', ToastAndroid.SHORT);
             }}
           />
-          <Button
-            title="Go back"
-            onPress={() => {
-              navigation.dispatch(StackActions.popToTop());
-            }}
-          />
         </View>
-      ) : (     
+        <TouchableOpacity 
+        onPress={() => {
+          navigation.dispatch(StackActions.popToTop());}}>
+          <Text style={{color: 'gray', textAlign: 'center', width: '100%', padding: 10, marginTop: 15, textTransform: "uppercase"}}>
+            Go Back
+          </Text>
+        </TouchableOpacity>
+        </View>
+      ) : (
         <View style={{width: '100%'}}>
           <View style={{marginVertical: 20}}>
             <Text
@@ -180,15 +204,21 @@ export default function ProductPage({route, navigation}) {
               }}>
               {productName}
             </Text>
-          </View>  
+          </View>
           <ProductField title={'Stocks'} value={productStocks} />
-          <ProductField title={'Expiry date'} value={moment(productExpiryDate).format('MMMM DD, YYYY')} />
-          {productNotes === undefined ?
-          <></>
-          : 
-          <ProductField title={'Notes'} placeholderText={'No notes'} value={productNotes} />
-        }
-
+          <ProductField
+            title={'Expiry date'}
+            value={moment(productExpiryDate).format('MMMM DD, YYYY')}
+          />
+          {productNotes === undefined ? (
+            <></>
+          ) : (
+            <ProductField
+              title={'Notes'}
+              placeholderText={'No notes'}
+              value={productNotes}
+            />
+          )}
         </View>
       )}
     </Container>

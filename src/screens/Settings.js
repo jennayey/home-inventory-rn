@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, View, Text} from 'react-native';
+import {Button, View, Text, ToastAndroid} from 'react-native';
 import Container from '../components/Container';
 import {globalStyles} from '../styles/global';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -27,12 +27,19 @@ function SettingsScreen({navigation, route}) {
           borderColor: '#EEE',
           paddingVertical: 10,
           width: '100%',
-          marginTop: 50
+          marginTop: 50,
         }}>
-        <Text style={globalStyles.text}>Clear List</Text>
+        <View
+          style={{display: 'flex', alignItems: 'flex-start', flexBasis: '60%'}}>
+          <Text style={globalStyles.text}>Clear List</Text>
+          <Text style={{color: 'gray'}}>
+            This will delete all data stored in the app. Use with caution.
+          </Text>
+        </View>
         <Button
           onPress={() => {
             clearData();
+            ToastAndroid.show('Inventory Deleted', ToastAndroid.SHORT);
           }}
           title="Clear"
         />
