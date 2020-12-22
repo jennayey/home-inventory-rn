@@ -85,7 +85,7 @@ export default function ProductField(props) {
               color: 'black',
             }}
             onChangeText={props.editMode ? props.onChangeText : null}
-            // placeholder={props.placeholderText || 'Placeholder'}
+            placeholder={props.placeholderText || 'Placeholder'}
             keyboardType={props.inputType || 'default'}
             value={props.value}
             editable={

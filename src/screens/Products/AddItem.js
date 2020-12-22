@@ -22,7 +22,7 @@ function AddItem({navigation, route}) {
   const [addItemModal, addItemModalVisible] = useState(false);
   const [itemName, setItemName] = useState('');
   const [itemExpiry, setItemExpiry] = useState('');
-  const [itemStock, setItemStock] = useState('');
+  const [itemStock, setItemStock] = useState(0);
   const [itemNotes, setItemNotes] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   //TODO
@@ -150,7 +150,11 @@ function AddItem({navigation, route}) {
           inputType={'numeric'}
           onChangeText={(text) => setItemStock(text)}
           placeholderText={'No of Stocks'}
-          editMode
+          textValue={itemStock}
+          numberField
+          onPressLButton={ () => setItemStock(prevItemStocks => prevItemStocks - 1)}
+            onPressRButton={ () => setItemStock(prevItemStocks => prevItemStocks + 1)}
+          
           
         />
         <ProductField
