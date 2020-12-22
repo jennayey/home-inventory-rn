@@ -10,7 +10,7 @@ import {
   Modal,
   ToastAndroid,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import colorSchemes from '../../styles/themes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,7 +18,7 @@ import Container from '../../components/Container';
 import moment from 'moment';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import ProductField from '../../components/Product.Field';
-import { globalStyles } from '../../styles/global';
+import {globalStyles} from '../../styles/global';
 export default function ProductPage({route, navigation}) {
   const {itemID, name, stock} = route.params;
   const [productID, setProductID] = useState();
@@ -156,8 +156,14 @@ export default function ProductPage({route, navigation}) {
           <ProductField
             title={'Stocks'}
             value={productStocks}
-            onChangeText={(text) => setProductStocks(text)}
             editMode
+            numberField
+            placeholder={productStocks}
+            textValue={productStocks}
+            keyboardType="numeric"
+            onPressLButton={ () => setProductStocks(prevProductStocks => prevProductStocks - 1)}
+            onPressRButton={ () => setProductStocks(prevProductStocks => prevProductStocks + 1)}
+
           />
           <ProductField
             title={'Expiry Date'}
@@ -175,24 +181,32 @@ export default function ProductPage({route, navigation}) {
             editMode
           />
 
-        <View style={{marginTop: 20}}>
-          
-        <Button
-            title="Save"
+          <View style={{marginTop: 20}}>
+            <Button
+              title="Save"
+              onPress={() => {
+                updateData();
+                setEditMode(false);
+                ToastAndroid.show('Item saved!', ToastAndroid.SHORT);
+              }}
+            />
+          </View>
+          <TouchableOpacity
             onPress={() => {
-              updateData();
-              setEditMode(false);
-              ToastAndroid.show('Item saved!', ToastAndroid.SHORT);
-            }}
-          />
-        </View>
-        <TouchableOpacity 
-        onPress={() => {
-          navigation.dispatch(StackActions.popToTop());}}>
-          <Text style={{color: 'gray', textAlign: 'center', width: '100%', padding: 10, marginTop: 15, textTransform: "uppercase"}}>
-            Go Back
-          </Text>
-        </TouchableOpacity>
+              navigation.dispatch(StackActions.popToTop());
+            }}>
+            <Text
+              style={{
+                color: 'gray',
+                textAlign: 'center',
+                width: '100%',
+                padding: 10,
+                marginTop: 15,
+                textTransform: 'uppercase',
+              }}>
+              Go Back
+            </Text>
+          </TouchableOpacity>
         </View>
       ) : (
         <View style={{width: '100%'}}>
@@ -205,7 +219,7 @@ export default function ProductPage({route, navigation}) {
               {productName}
             </Text>
           </View>
-          <ProductField title={'Stocks'} value={productStocks} />
+          <ProductField title={'Stocks'} value={productStocks.toString()}/>
           <ProductField
             title={'Expiry date'}
             value={moment(productExpiryDate).format('MMMM DD, YYYY')}
